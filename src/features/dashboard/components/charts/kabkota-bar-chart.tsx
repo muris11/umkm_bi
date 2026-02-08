@@ -1,5 +1,6 @@
-'use client';
-
+import { Button } from '@/components/ui/button';
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import { useState } from 'react';
 import {
     Bar,
     BarChart,
@@ -26,23 +27,48 @@ const METRIC_CONFIG = {
 };
 
 export function KabKotaBarChart({ data, metric, title, description }: KabKotaBarChartProps) {
+  const [showAll, setShowAll] = useState(false);
   const config = METRIC_CONFIG[metric];
   
-  const chartData = data
-    .sort((a, b) => b[metric] - a[metric])
-    .slice(0, 10)
-    .map(d => ({
+  const sortedData = [...data].sort((a, b) => b[metric] - a[metric]);
+  const displayData = showAll ? sortedData : sortedData.slice(0, 10);
+
+  const chartData = displayData.map(d => ({
       name: d.kabKota.replace('Kabupaten ', 'Kab. ').replace('Kota ', ''),
       value: metric === 'totalUmkm' ? d[metric] : Number(d[metric].toFixed(1)),
     }));
 
+  // Dynamic height calculation: Base 500px for Top 10, expand for All (approx 35px per bar)
+  const chartHeight = showAll ? Math.max(500, chartData.length * 40) : 500;
+
   return (
-    <article className="panel card-padding">
-      <header className="card-head">
-        <h3>{title}</h3>
-        <p className="text-sm text-gray-500">{description}</p>
+    <article className="panel card-padding transition-all duration-500 ease-in-out">
+      <header className="card-head flex flex-row justify-between items-start gap-4">
+        <div>
+            <h3>{title}</h3>
+            <p className="text-sm text-gray-500">{description}</p>
+        </div>
+        <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={() => setShowAll(!showAll)}
+            className="text-xs h-8 shrink-0"
+        >
+            {showAll ? (
+                <>
+                    <ChevronUp className="w-3 h-3 mr-1" />
+                    Top 10
+                </>
+            ) : (
+                <>
+                    <ChevronDown className="w-3 h-3 mr-1" />
+                    Lihat Semua
+                </>
+            )}
+        </Button>
       </header>
-      <div style={{ width: '100%', height: 500 }}>
+      
+      <div style={{ width: '100%', height: chartHeight }} className="transition-all duration-500 ease-in-out">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={chartData} layout="vertical" margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={true} stroke="#e2e8f0" />
@@ -65,6 +91,7 @@ export function KabKotaBarChart({ data, metric, title, description }: KabKotaBar
               name={config.name}
               radius={[0, 4, 4, 0]}
               barSize={24}
+              animationDuration={500}
             />
           </BarChart>
         </ResponsiveContainer>
