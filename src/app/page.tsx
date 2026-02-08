@@ -8,8 +8,9 @@ import { aggregateByKabKota } from "@/features/dashboard/lib/data-aggregator"
 import { loadDashboardData } from "@/features/dashboard/lib/data-loader"
 
 export default async function LandingPage() {
-  const { rawData } = await loadDashboardData();
-  const aggregatedData = aggregateByKabKota(rawData);
+  const { rawData, meta } = await loadDashboardData();
+  const latestYear = Math.max(...meta.tahun);
+  const aggregatedData = aggregateByKabKota(rawData, latestYear);
 
   const mapData = aggregatedData.map(d => ({
     kabKota: d.kabKota,
