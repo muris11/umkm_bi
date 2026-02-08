@@ -15,7 +15,7 @@ export function Card({ className, children, gradient, ...props }: CardProps) {
       animate={{ opacity: 1, y: 0 }}
       className={cn(
         "rounded-2xl border border-white/50 bg-white/60 p-6 shadow-sm backdrop-blur-xl transition-all hover:shadow-md",
-        "dark:border-white/10 dark:bg-slate-900/60",
+        "",
         gradient && "bg-gradient-to-br from-white/80 to-white/40",
         className
       )}

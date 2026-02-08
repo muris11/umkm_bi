@@ -29,7 +29,7 @@ export function DashboardFilters({
   filteredData,
 }: DashboardFiltersProps) {
   return (
-    <Card className="mb-8 bg-white/80 backdrop-blur-sm border-slate-200/60 sticky top-20 z-10 shadow-sm transition-all duration-300">
+    <Card className="mb-8 bg-white/80 backdrop-blur-sm border-slate-200/60 shadow-sm transition-all duration-300">
       <div className="flex flex-col lg:flex-row items-center gap-4 p-4">
         <div className="flex items-center gap-2 px-1 text-slate-500 font-medium whitespace-nowrap">
             <Filter className="w-5 h-5" />

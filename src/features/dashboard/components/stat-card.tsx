@@ -37,7 +37,7 @@ export function StatCard({ title, value, description, icon, className, delay = 0
           )}
         </div>
         {icon && (
-          <div className="rounded-full bg-slate-100 p-2 text-slate-600 dark:bg-slate-800 dark:text-slate-400">
+          <div className="rounded-full bg-slate-100 p-2 text-slate-600">
             {icon}
           </div>
         )}
