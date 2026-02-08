@@ -6,7 +6,11 @@ import { Map } from "lucide-react"
 import Link from "next/link"
 import { MapWrapper } from "../maps/map-wrapper"
 
-export function MapPreview() {
+interface MapPreviewProps {
+  data: { kabKota: string; count: number }[];
+}
+
+export function MapPreview({ data }: MapPreviewProps) {
   return (
     <section className="py-24 relative overflow-hidden bg-slate-900 text-white">
       <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-20" />
@@ -31,7 +35,7 @@ export function MapPreview() {
                         Peta Sebaran Interaktif
                     </h2>
                     <p className="text-slate-400 text-lg mb-8 leading-relaxed">
-                        Analisis kepadatan UMKM hingga level kecamatan. Identifikasi klaster industri, sentra produksi, dan potensi wilayah dengan mudah melalui peta interaktif kami.
+                        Analisis persebaran UMKM di 27 Kabupaten/Kota Jawa Barat. Identifikasi klaster industri dan potensi wilayah dengan data real-time.
                     </p>
                     <Link href="/dashboard">
                         <Button size="lg" className="h-12 px-8 bg-blue-600 hover:bg-blue-500 border-none shadow-lg shadow-blue-900/50">
@@ -43,7 +47,7 @@ export function MapPreview() {
             </div>
             
             <div className="lg:w-1/2 w-full h-[400px]">
-                <MapWrapper />
+                <MapWrapper data={data} />
             </div>
         </div>
       </div>
