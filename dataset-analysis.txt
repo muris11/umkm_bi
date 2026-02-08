@@ -1,0 +1,58 @@
+=== DATASET ANALYSIS ===
+Total Rows: 8778
+
+=== ALL COLUMNS ===
+0: tahun
+1: provinsi
+2: kab_kota
+3: kecamatan
+4: sektor_umkm_utama
+5: penduduk
+6: jumlah_umkm
+7: umkm_per_1000_penduduk
+8: persen_umkm_formal
+9: persen_umkm_digital
+10: persen_umkm_akses_pembiayaan
+11: rata2_omzet_bulanan_juta
+12: omzet_tahunan_miliar
+13: tenaga_kerja_umkm
+14: indeks_infrastruktur_internet
+15: indeks_biaya_logistik
+16: jumlah_pelatihan_inkubasi
+17: anggaran_pemberdayaan_umkm_miliar
+18: indeks_kemudahan_berusaha
+19: tingkat_pengangguran_terbuka_persen
+20: tingkat_kemiskinan_persen
+21: kejadian_gangguan_distribusi_tahun
+
+=== SAMPLE ROW ===
+{
+  "tahun": 2024,
+  "provinsi": "Jawa Barat",
+  "kab_kota": "Kabupaten Bogor",
+  "kecamatan": "Cibinong",
+  "sektor_umkm_utama": "Kuliner",
+  "penduduk": 96142,
+  "jumlah_umkm": 1327,
+  "umkm_per_1000_penduduk": 13.8,
+  "persen_umkm_formal": 63.7,
+  "persen_umkm_digital": 79.1,
+  "persen_umkm_akses_pembiayaan": 74.1,
+  "rata2_omzet_bulanan_juta": 14.21,
+  "omzet_tahunan_miliar": 226.225,
+  "tenaga_kerja_umkm": 3613,
+  "indeks_infrastruktur_internet": 94.3,
+  "indeks_biaya_logistik": 37.1,
+  "jumlah_pelatihan_inkubasi": 5,
+  "anggaran_pemberdayaan_umkm_miliar": 0.842,
+  "indeks_kemudahan_berusaha": 72.8,
+  "tingkat_pengangguran_terbuka_persen": 4.8,
+  "tingkat_kemiskinan_persen": 5.1,
+  "kejadian_gangguan_distribusi_tahun": 0
+}
+
+=== UNIQUE VALUES ===
+Years: [2024,2025]
+Kab/Kota count: 27
+Kecamatan count: 581
+Sektor: ["Kuliner","Fashion","Kerajinan","Jasa","Pertanian Olahan","Perdagangan","Teknologi"]

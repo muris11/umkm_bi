@@ -1,0 +1,123 @@
+{
+  "meta": {
+    "sumber": "dataset_umkm_jabar_1000rows.csv",
+    "jumlahBaris": 1000,
+    "tahun": 2025,
+    "catatanMetodologi": [
+      "Skor prioritas menggunakan weighted score: 0.30*(100-formal) + 0.25*(100-digital) + 0.20*(100-akses) + 0.15*biaya_logistik + 0.10*kemiskinan",
+      "KPI dihitung dari rata-rata atau total seluruh kecamatan",
+      "Wilayah prioritas adalah 4 kecamatan dengan skor prioritas tertinggi"
+    ]
+  },
+  "kpi": {
+    "totalUmkm": 3338788,
+    "rataUmkmPer1000Penduduk": 30.39,
+    "rataPersenUmkmFormal": 40.21,
+    "rataPersenUmkmDigital": 47.95,
+    "rataPersenAksesPembiayaan": 28.88,
+    "totalTenagaKerjaUmkm": 7572417,
+    "rataOmzetBulananJuta": 20.24
+  },
+  "prioritas": [
+    {
+      "label": "A",
+      "kecamatan": "Kecamatan_25",
+      "kabKota": "Kabupaten Pangandaran",
+      "umkmPer1000Penduduk": 20.19,
+      "persenUmkmFormal": 20.0,
+      "persenUmkmDigital": 23.0,
+      "persenAksesPembiayaan": 5.3,
+      "indeksBiayaLogistik": 78.4,
+      "anggaranMiliar": 16.7,
+      "skorPrioritas": 75.03
+    },
+    {
+      "label": "B",
+      "kecamatan": "Kecamatan_18",
+      "kabKota": "Kabupaten Tasikmalaya",
+      "umkmPer1000Penduduk": 11.87,
+      "persenUmkmFormal": 23.8,
+      "persenUmkmDigital": 16.8,
+      "persenAksesPembiayaan": 3.0,
+      "indeksBiayaLogistik": 67.1,
+      "anggaranMiliar": 10.8,
+      "skorPrioritas": 74.0
+    },
+    {
+      "label": "C",
+      "kecamatan": "Kecamatan_05",
+      "kabKota": "Kabupaten Kuningan",
+      "umkmPer1000Penduduk": 14.34,
+      "persenUmkmFormal": 17.9,
+      "persenUmkmDigital": 15.8,
+      "persenAksesPembiayaan": 7.0,
+      "indeksBiayaLogistik": 56.3,
+      "anggaranMiliar": 11.6,
+      "skorPrioritas": 73.52
+    },
+    {
+      "label": "D",
+      "kecamatan": "Kecamatan_07",
+      "kabKota": "Kabupaten Kuningan",
+      "umkmPer1000Penduduk": 38.39,
+      "persenUmkmFormal": 10.0,
+      "persenUmkmDigital": 19.4,
+      "persenAksesPembiayaan": 26.4,
+      "indeksBiayaLogistik": 72.9,
+      "anggaranMiliar": 14.0,
+      "skorPrioritas": 73.32
+    }
+  ],
+  "insight": {
+    "wilayahPrioritasUtama": "Kecamatan_25, Kabupaten Pangandaran",
+    "wilayahPalingStabil": "Kecamatan_11, Kota Tasikmalaya",
+    "narasi": [
+      "Wilayah prioritas utama adalah Kecamatan_25, Kabupaten Pangandaran dengan skor prioritas 75.03.",
+      "Formalisasi UMKM di wilayah prioritas masih rendah (20.0%).",
+      "Digitalisasi UMKM perlu ditingkatkan di wilayah prioritas (23.0%).",
+      "Akses pembiayaan UMKM masih terbatas di wilayah prioritas (5.3%)."
+    ]
+  },
+  "alternatifDss": [
+    {
+      "alternatif": "Program Pelatihan Digital UMKM",
+      "dampak": "Meningkatkan adopsi digital 15-20% dalam 1 tahun",
+      "biaya": "Rp 5-8 miliar per kecamatan",
+      "risiko": "Rendah - teknologi matang, SDM tersedia",
+      "skorEfektivitas": 85,
+      "skorKelayakanAnggaran": 70
+    },
+    {
+      "alternatif": "Fasilitasi Formalisasi UMKM",
+      "dampak": "Meningkatkan formalisasi 10-15% dalam 1 tahun",
+      "biaya": "Rp 3-5 miliar per kecamatan",
+      "risiko": "Sedang - butuh koordinasi lintas instansi",
+      "skorEfektivitas": 75,
+      "skorKelayakanAnggaran": 85
+    },
+    {
+      "alternatif": "Program Akses Pembiayaan UMKM",
+      "dampak": "Meningkatkan akses pembiayaan 12-18% dalam 1 tahun",
+      "biaya": "Rp 10-15 miliar per kecamatan",
+      "risiko": "Sedang - memerlukan kemitraan dengan lembaga keuangan",
+      "skorEfektivitas": 80,
+      "skorKelayakanAnggaran": 60
+    },
+    {
+      "alternatif": "Optimasi Logistik UMKM",
+      "dampak": "Mengurangi biaya logistik 8-12% dalam 1 tahun",
+      "biaya": "Rp 7-10 miliar per kecamatan",
+      "risiko": "Tinggi - infrastruktur kompleks, memerlukan investasi jangka panjang",
+      "skorEfektivitas": 70,
+      "skorKelayakanAnggaran": 65
+    }
+  ],
+  "keputusan": {
+    "pilihanUtama": "Program Pelatihan Digital UMKM",
+    "alasan": "Skor efektivitas tertinggi (85) dengan risiko rendah. Teknologi matang dan SDM tersedia. Dampak signifikan terhadap digitalisasi UMKM di wilayah prioritas.",
+    "wilayahFokus": [
+      "Kecamatan_25",
+      "Kecamatan_18"
+    ]
+  }
+}

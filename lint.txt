@@ -1,0 +1,41 @@
+
+> dashboard-app@0.1.0 lint
+> eslint
+
+
+C:\Users\rifqy\Documents\KULIAH\BELAJAR\NEXT JS\umkmdashboard\dashboard-app\scripts\analyze-dataset.js
+  1:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+C:\Users\rifqy\Documents\KULIAH\BELAJAR\NEXT JS\umkmdashboard\dashboard-app\scripts\convert-xlsx-to-json.js
+   1:14  error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   2:12  error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   3:14  error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  22:32  warning  'index' is defined but never used        @typescript-eslint/no-unused-vars
+
+C:\Users\rifqy\Documents\KULIAH\BELAJAR\NEXT JS\umkmdashboard\dashboard-app\src\app\api\download\route.ts
+   7:22  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  30:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  32:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\rifqy\Documents\KULIAH\BELAJAR\NEXT JS\umkmdashboard\dashboard-app\src\components\ui\button.tsx
+  26:40  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\rifqy\Documents\KULIAH\BELAJAR\NEXT JS\umkmdashboard\dashboard-app\src\features\dashboard\lib\build-extended-view-model.ts
+  62:33  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\rifqy\Documents\KULIAH\BELAJAR\NEXT JS\umkmdashboard\dashboard-app\src\features\dashboard\lib\data-aggregator.ts
+  72:11  warning  'count' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\rifqy\Documents\KULIAH\BELAJAR\NEXT JS\umkmdashboard\dashboard-app\src\features\dashboard\lib\data-loader.ts
+  10:28  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  17:45  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\rifqy\Documents\KULIAH\BELAJAR\NEXT JS\umkmdashboard\dashboard-app\src\features\dashboard\lib\dss-scorer.ts
+  8:33  warning  'index' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\rifqy\Documents\KULIAH\BELAJAR\NEXT JS\umkmdashboard\dashboard-app\src\lib\export-utils.ts
+  15:31  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+✖ 16 problems (13 errors, 3 warnings)
+
