@@ -42,34 +42,32 @@ export function KabKotaBarChart({ data, metric, title, description }: KabKotaBar
         <h3>{title}</h3>
         <p className="text-sm text-gray-500">{description}</p>
       </header>
-      <div className="w-full overflow-x-auto pb-4">
-        <div style={{ minWidth: '600px', height: 450 }}>
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={chartData} layout="vertical" margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={true} stroke="#e2e8f0" />
-              <XAxis type="number" tick={{ fontSize: 12 }} />
-              <YAxis 
-                dataKey="name" 
-                type="category" 
-                width={150} 
-                tick={{ fontSize: 11, width: 140 }} 
-                interval={0}
-              />
-              <Tooltip 
-                cursor={{ fill: 'transparent' }}
-                contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
-              />
-              <Legend />
-              <Bar 
-                dataKey="value" 
-                fill={config.fill} 
-                name={config.name}
-                radius={[0, 4, 4, 0]}
-                barSize={20}
-              />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
+      <div style={{ width: '100%', height: 500 }}>
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={chartData} layout="vertical" margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
+            <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={true} stroke="#e2e8f0" />
+            <XAxis type="number" tick={{ fontSize: 10 }} />
+            <YAxis 
+              dataKey="name" 
+              type="category" 
+              width={110} 
+              tick={{ fontSize: 10, width: 100 }} 
+              interval={0}
+            />
+            <Tooltip 
+              cursor={{ fill: 'transparent' }}
+              contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+            />
+            <Legend verticalAlign="top" height={36}/>
+            <Bar 
+              dataKey="value" 
+              fill={config.fill} 
+              name={config.name}
+              radius={[0, 4, 4, 0]}
+              barSize={24}
+            />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
     </article>
   );
