@@ -6,7 +6,15 @@ import { BarChart3, ChevronRight } from "lucide-react"
 import Link from "next/link"
 import { StatsTicker } from "./stats-ticker"
 
-export function LandingHero() {
+interface LandingHeroProps {
+  totalUmkm: number;
+  totalTenagaKerja: number;
+  avgPersenDigital: number;
+  totalWilayah: number;
+  totalSektor: number;
+}
+
+export function LandingHero({ totalUmkm, totalTenagaKerja, avgPersenDigital, totalWilayah, totalSektor }: LandingHeroProps) {
   return (
     <section className="relative pt-20 overflow-hidden flex flex-col min-h-[90vh] justify-center">
       {/* Background Elements */}
@@ -48,7 +56,7 @@ export function LandingHero() {
            className="text-xl text-slate-600 max-w-2xl mx-auto mb-12 leading-relaxed"
         >
           Portal resmi integrasi data Usaha Mikro, Kecil, dan Menengah. 
-          Pantau pertumbuhan, sebaran, dan potensi ekonomi di 27 Kabupaten/Kota.
+          Pantau pertumbuhan, sebaran, dan potensi ekonomi di {totalWilayah} Kabupaten/Kota.
         </motion.p>
 
         <motion.div 
@@ -77,7 +85,13 @@ export function LandingHero() {
          transition={{ duration: 1, delay: 0.5 }}
          className="mt-20 w-full"
       >
-        <StatsTicker />
+        <StatsTicker 
+          totalUmkm={totalUmkm}
+          totalTenagaKerja={totalTenagaKerja}
+          avgPersenDigital={avgPersenDigital}
+          totalWilayah={totalWilayah}
+          totalSektor={totalSektor}
+        />
       </motion.div>
     </section>
   )

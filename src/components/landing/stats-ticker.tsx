@@ -1,16 +1,33 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { Building2, Factory, MapPin, Monitor, TrendingUp, Users } from "lucide-react"
+import { motion } from "framer-motion";
+import { Building2, Factory, MapPin, Monitor, TrendingUp, Users } from "lucide-react";
 
-export function StatsTicker() {
+interface StatsTickerProps {
+  totalUmkm: number;
+  totalTenagaKerja: number;
+  avgPersenDigital: number;
+  totalWilayah: number;
+  totalSektor: number;
+}
+
+function formatNumber(num: number): string {
+  if (num >= 1_000_000) {
+    return `${(num / 1_000_000).toFixed(1)} Juta+`;
+  } else if (num >= 1_000) {
+    return `${(num / 1_000).toFixed(0)}K+`;
+  }
+  return `${num}+`;
+}
+
+export function StatsTicker({ totalUmkm, totalTenagaKerja, avgPersenDigital, totalWilayah, totalSektor }: StatsTickerProps) {
   const stats = [
-    { icon: Building2, text: "Total UMKM: 9.4 Juta+" },
-    { icon: Users, text: "Tenaga Kerja: 25.4 Juta+" },
-    { icon: TrendingUp, text: "Kontribusi PDRB: 60%+" },
-    { icon: Monitor, text: "Digitalisasi: 79%" },
-    { icon: MapPin, text: "27 Kabupaten/Kota" },
-    { icon: Factory, text: "18 Sektor Usaha" },
+    { icon: Building2, text: `Total UMKM: ${formatNumber(totalUmkm)}` },
+    { icon: Users, text: `Tenaga Kerja: ${formatNumber(totalTenagaKerja)}` },
+    { icon: TrendingUp, text: `Kontribusi PDRB: 60%+` },
+    { icon: Monitor, text: `Digitalisasi: ${avgPersenDigital.toFixed(0)}%` },
+    { icon: MapPin, text: `${totalWilayah} Kabupaten/Kota` },
+    { icon: Factory, text: `${totalSektor} Sektor Usaha` },
   ]
 
   return (

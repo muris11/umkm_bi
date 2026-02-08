@@ -1,38 +1,57 @@
 "use client"
 
-import { Card } from "@/components/ui/card"
-import { motion } from "framer-motion"
-import { ArrowUpRight, Building2, Store, TrendingUp, Users } from "lucide-react"
+import { Card } from "@/components/ui/card";
+import { motion } from "framer-motion";
+import { ArrowUpRight, Building2, Store, TrendingUp, Users } from "lucide-react";
 
-export function KeyStats() {
+interface KeyStatsProps {
+  totalUmkm: number;
+  totalTenagaKerja: number;
+  avgPersenDigital: number;
+  totalWilayah: number;
+  yoyGrowth?: {
+    umkmGrowth: number;
+    digitalGrowth: number;
+  };
+}
+
+function formatNumber(num: number): string {
+  if (num >= 1_000_000) {
+    return `${(num / 1_000_000).toFixed(1)} Juta`;
+  } else if (num >= 1_000) {
+    return `${(num / 1_000).toFixed(0)}K`;
+  }
+  return num.toFixed(0);
+}
+
+export function KeyStats({ totalUmkm, totalTenagaKerja, avgPersenDigital, totalWilayah, yoyGrowth }: KeyStatsProps) {
   const stats = [
     {
       label: "Total Unit Usaha",
-      value: "9.4 Juta",
-      trend: "+12.5%",
+      value: formatNumber(totalUmkm),
+      trend: yoyGrowth ? `+${yoyGrowth.umkmGrowth.toFixed(1)}%` : undefined,
       icon: Store,
       color: "text-blue-600",
       bg: "bg-blue-50"
     },
     {
       label: "Serapan Tenaga Kerja",
-      value: "25.4 Juta",
-      trend: "+8.2%",
+      value: formatNumber(totalTenagaKerja),
       icon: Users,
       color: "text-teal-600",
       bg: "bg-teal-50"
     },
     {
       label: "Indeks Digitalisasi",
-      value: "79.1",
-      trend: "+15.3%",
+      value: avgPersenDigital.toFixed(1),
+      trend: yoyGrowth ? `+${yoyGrowth.digitalGrowth.toFixed(1)}%` : undefined,
       icon: TrendingUp,
       color: "text-purple-600",
       bg: "bg-purple-50"
     },
      {
       label: "Wilayah Terdaftar",
-      value: "27",
+      value: totalWilayah.toString(),
       sub: "Kabupaten/Kota",
       icon: Building2,
       color: "text-orange-600",
