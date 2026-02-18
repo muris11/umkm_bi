@@ -29,16 +29,14 @@ export function DashboardFilters({
   filteredData,
 }: DashboardFiltersProps) {
   return (
-    <Card className="mb-8 bg-white/80 backdrop-blur-sm border-slate-200/60 shadow-sm transition-all duration-300">
-      <div className="flex flex-col lg:flex-row items-center gap-4 p-4">
-        <div className="flex items-center gap-2 px-1 text-slate-500 font-medium whitespace-nowrap">
-            <Filter className="w-5 h-5" />
-            <span>Filter Data</span>
+    <Card className="mb-6 sm:mb-8 bg-white/80 backdrop-blur-sm border-slate-200/60 shadow-sm transition-all duration-300">
+      <div className="flex flex-col gap-3 sm:gap-4 p-3 sm:p-4">
+        <div className="flex items-center gap-2 text-slate-500 font-medium">
+            <Filter className="w-4 h-4 sm:w-5 sm:h-5" />
+            <span className="text-sm sm:text-base">Filter Data</span>
         </div>
         
-        <div className="h-8 w-[1px] bg-slate-200 hidden lg:block" />
-
-        <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {/* Year Filter */}
             <div className="relative group">
                 <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-brand-teal transition-colors pointer-events-none">
@@ -48,7 +46,7 @@ export function DashboardFilters({
                     id="year-filter"
                     value={selectedYear}
                     onChange={(e) => onYearChange(Number(e.target.value))}
-                    className="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-teal/20 focus:border-brand-teal transition-all cursor-pointer hover:bg-slate-100 appearance-none"
+                    className="w-full pl-9 pr-4 py-2 sm:py-2.5 bg-slate-50 border border-slate-200 rounded-lg sm:rounded-xl text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-teal/20 focus:border-brand-teal transition-all cursor-pointer hover:bg-slate-100 appearance-none min-h-[44px]"
                     style={{ backgroundImage: 'none' }}
                 >
                 {years.map((year) => (
@@ -66,7 +64,7 @@ export function DashboardFilters({
                     id="kabkota-filter"
                     value={selectedKabKota || ''}
                     onChange={(e) => onKabKotaChange(e.target.value || null)}
-                    className="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-teal/20 focus:border-brand-teal transition-all cursor-pointer hover:bg-slate-100 appearance-none"
+                    className="w-full pl-9 pr-4 py-2 sm:py-2.5 bg-slate-50 border border-slate-200 rounded-lg sm:rounded-xl text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-teal/20 focus:border-brand-teal transition-all cursor-pointer hover:bg-slate-100 appearance-none min-h-[44px]"
                     style={{ backgroundImage: 'none' }}
                 >
                 <option value="">Semua Wilayah</option>
@@ -77,7 +75,7 @@ export function DashboardFilters({
             </div>
 
             {/* Sektor Filter */}
-             <div className="relative group">
+             <div className="relative group sm:col-span-2 lg:col-span-1">
                 <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-brand-teal transition-colors pointer-events-none">
                     <Briefcase className="w-4 h-4" />
                 </div>
@@ -85,7 +83,7 @@ export function DashboardFilters({
                     id="sektor-filter"
                     value={selectedSektor || ''}
                     onChange={(e) => onSektorChange((e.target.value as SektorUmkm) || null)}
-                    className="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-teal/20 focus:border-brand-teal transition-all cursor-pointer hover:bg-slate-100 appearance-none"
+                    className="w-full pl-9 pr-4 py-2 sm:py-2.5 bg-slate-50 border border-slate-200 rounded-lg sm:rounded-xl text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-teal/20 focus:border-brand-teal transition-all cursor-pointer hover:bg-slate-100 appearance-none min-h-[44px]"
                     style={{ backgroundImage: 'none' }}
                 >
                 <option value="">Semua Sektor UMKM</option>
@@ -96,9 +94,7 @@ export function DashboardFilters({
             </div>
         </div>
 
-        <div className="h-8 w-[1px] bg-slate-200 hidden lg:block" />
-
-        <div className="w-full lg:w-auto">
+        <div className="flex justify-end pt-2 border-t border-slate-100 sm:border-0 sm:pt-0">
             <DownloadButton data={filteredData} label="Unduh Data" />
         </div>
       </div>

@@ -307,16 +307,16 @@ export function BIBuilderSection() {
   };
 
   return (
-    <Card className="mb-8 overflow-hidden border-cyan-200 bg-gradient-to-br from-cyan-50/50 to-white">
-      <CardHeader className="pb-4 border-b border-cyan-100">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-cyan-100 rounded-xl text-cyan-600">
-              <Palette className="w-6 h-6" />
+    <Card className="mb-6 sm:mb-8 overflow-hidden border-cyan-200 bg-gradient-to-br from-cyan-50/50 to-white">
+      <CardHeader className="pb-3 sm:pb-4 border-b border-cyan-100 p-4 sm:p-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="p-2 sm:p-2.5 bg-cyan-100 rounded-lg sm:rounded-xl text-cyan-600 shrink-0">
+              <Palette className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
-            <div>
-              <CardTitle className="text-cyan-900 text-xl">BI Dashboard Builder</CardTitle>
-              <p className="text-sm text-cyan-600 mt-1">
+            <div className="min-w-0">
+              <CardTitle className="text-cyan-900 text-lg sm:text-xl">BI Dashboard Builder</CardTitle>
+              <p className="text-xs sm:text-sm text-cyan-600 mt-0.5 sm:mt-1">
                 Buat dashboard custom dengan KPI dan visualisasi pilihan Anda
               </p>
             </div>
@@ -324,32 +324,33 @@ export function BIBuilderSection() {
           <div className="flex gap-2">
             <button
               onClick={() => setShowPreview(!showPreview)}
-              className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-slate-600 bg-white border border-slate-200 rounded-lg hover:border-cyan-300 transition-colors"
+              className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-2 text-xs sm:text-sm font-medium text-slate-600 bg-white border border-slate-200 rounded-lg hover:border-cyan-300 transition-colors"
             >
-              {showPreview ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-              {showPreview ? 'Sembunyikan Preview' : 'Tampilkan Preview'}
+              {showPreview ? <EyeOff className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> : <Eye className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
+              <span className="hidden sm:inline">{showPreview ? 'Sembunyikan Preview' : 'Tampilkan Preview'}</span>
+              <span className="sm:hidden">{showPreview ? 'Hide' : 'Show'}</span>
             </button>
-            <button className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-white bg-cyan-600 rounded-lg hover:bg-cyan-700 transition-colors">
-              <Download className="w-4 h-4" />
-              Simpan
+            <button className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-2 text-xs sm:text-sm font-medium text-white bg-cyan-600 rounded-lg hover:bg-cyan-700 transition-colors">
+              <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">Simpan</span>
             </button>
           </div>
         </div>
       </CardHeader>
       
-      <CardContent className="p-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="space-y-6">
-            <div className="p-4 bg-white rounded-xl border border-slate-200">
-              <div className="flex items-center justify-between mb-4">
-                <span className="font-semibold text-slate-900">Pilih KPI</span>
-                <Badge variant="info">{selectedKPIs.length} dipilih</Badge>
+      <CardContent className="p-3 sm:p-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+          <div className="space-y-4 sm:space-y-6">
+            <div className="p-3 sm:p-4 bg-white rounded-lg sm:rounded-xl border border-slate-200">
+              <div className="flex items-center justify-between mb-3 sm:mb-4">
+                <span className="font-semibold text-slate-900 text-sm sm:text-base">Pilih KPI</span>
+                <Badge variant="info" className="text-xs">{selectedKPIs.length} dipilih</Badge>
               </div>
 
               <div className="space-y-3">
                 {Object.entries(categoryLabels).map(([category, label]) => (
                   <div key={category}>
-                    <div className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">{label}</div>
+                    <div className="text-[10px] sm:text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">{label}</div>
                     <div className="grid grid-cols-1 gap-2">
                       {availableKPIs
                         .filter(kpi => kpi.category === category)
@@ -361,19 +362,19 @@ export function BIBuilderSection() {
                             <button
                               key={kpi.id}
                               onClick={() => toggleKPI(kpi.id)}
-                              className={`flex items-center justify-between p-3 rounded-lg border text-left transition-all ${
+                              className={`flex items-center justify-between p-2.5 sm:p-3 rounded-lg border text-left transition-all ${
                                 isSelected 
                                   ? `${colors.bg} ${colors.border} border-2` 
                                   : 'bg-slate-50 border-slate-200 hover:border-slate-300'
                               }`}
                             >
-                              <div>
-                                <div className={`text-sm font-medium ${isSelected ? colors.text : 'text-slate-700'}`}>
+                              <div className="min-w-0">
+                                <div className={`text-xs sm:text-sm font-medium ${isSelected ? colors.text : 'text-slate-700'}`}>
                                   {kpi.label}
                                 </div>
-                                <div className="text-xs text-slate-500">{kpi.value}</div>
+                                <div className="text-[10px] sm:text-xs text-slate-500">{kpi.value}</div>
                               </div>
-                              {isSelected && <Check className={`w-4 h-4 ${colors.text}`} />}
+                              {isSelected && <Check className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${colors.text} shrink-0`} />}
                             </button>
                           );
                         })}
@@ -383,10 +384,10 @@ export function BIBuilderSection() {
               </div>
             </div>
 
-            <div className="p-4 bg-white rounded-xl border border-slate-200">
-              <div className="flex items-center justify-between mb-4">
-                <span className="font-semibold text-slate-900">Pilih Visualisasi</span>
-                <Badge variant="info">{selectedVizs.length} dipilih</Badge>
+            <div className="p-3 sm:p-4 bg-white rounded-lg sm:rounded-xl border border-slate-200">
+              <div className="flex items-center justify-between mb-3 sm:mb-4">
+                <span className="font-semibold text-slate-900 text-sm sm:text-base">Pilih Visualisasi</span>
+                <Badge variant="info" className="text-xs">{selectedVizs.length} dipilih</Badge>
               </div>
 
               <div className="grid grid-cols-1 gap-2">
@@ -397,26 +398,26 @@ export function BIBuilderSection() {
                     <button
                       key={viz.id}
                       onClick={() => toggleViz(viz.id)}
-                      className={`flex items-center gap-3 p-3 rounded-lg border text-left transition-all ${
+                      className={`flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 rounded-lg border text-left transition-all ${
                         isSelected 
                           ? 'bg-cyan-50 border-cyan-300 border-2' 
                           : 'bg-slate-50 border-slate-200 hover:border-slate-300'
                       }`}
                     >
-                      <div className={`p-2 rounded-lg ${isSelected ? 'bg-cyan-100 text-cyan-600' : 'bg-slate-200 text-slate-500'}`}>
-                        {viz.type === 'line' && <TrendingUp className="w-4 h-4" />}
-                        {viz.type === 'bar' && <BarChart3 className="w-4 h-4" />}
-                        {viz.type === 'pie' && <PieChartIcon className="w-4 h-4" />}
-                        {viz.type === 'gauge' && <Target className="w-4 h-4" />}
-                        {viz.type === 'heatmap' && <Map className="w-4 h-4" />}
+                      <div className={`p-1.5 sm:p-2 rounded-lg shrink-0 ${isSelected ? 'bg-cyan-100 text-cyan-600' : 'bg-slate-200 text-slate-500'}`}>
+                        {viz.type === 'line' && <TrendingUp className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
+                        {viz.type === 'bar' && <BarChart3 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
+                        {viz.type === 'pie' && <PieChartIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
+                        {viz.type === 'gauge' && <Target className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
+                        {viz.type === 'heatmap' && <Map className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
                       </div>
-                      <div className="flex-1">
-                        <div className={`text-sm font-medium ${isSelected ? 'text-cyan-900' : 'text-slate-700'}`}>
+                      <div className="flex-1 min-w-0">
+                        <div className={`text-xs sm:text-sm font-medium ${isSelected ? 'text-cyan-900' : 'text-slate-700'}`}>
                           {viz.title}
                         </div>
-                        <div className="text-xs text-slate-500">{viz.description}</div>
+                        <div className="text-[10px] sm:text-xs text-slate-500 truncate">{viz.description}</div>
                       </div>
-                      {isSelected && <Check className="w-4 h-4 text-cyan-600" />}
+                      {isSelected && <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-600 shrink-0" />}
                     </button>
                   );
                 })}
@@ -425,61 +426,61 @@ export function BIBuilderSection() {
           </div>
 
           {showPreview && (
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               <div className="flex items-center justify-between">
                 <input
                   type="text"
                   value={dashboardName}
                   onChange={(e) => setDashboardName(e.target.value)}
-                  className="text-lg font-bold text-slate-900 bg-transparent border-b border-transparent hover:border-slate-300 focus:border-cyan-500 focus:outline-none transition-colors"
+                  className="text-base sm:text-lg font-bold text-slate-900 bg-transparent border-b border-transparent hover:border-slate-300 focus:border-cyan-500 focus:outline-none transition-colors w-full mr-2"
                 />
                 <div className="flex gap-2">
-                  <button className="flex items-center gap-1 text-xs text-slate-500 hover:text-slate-700">
+                  <button className="flex items-center gap-1 text-[10px] sm:text-xs text-slate-500 hover:text-slate-700">
                     <Share2 className="w-3 h-3" />
-                    Bagikan
+                    <span className="hidden sm:inline">Bagikan</span>
                   </button>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2 sm:gap-3">
                 {selectedKPIData.map((kpi) => {
                   const colors = categoryColors[kpi.category];
                   return (
-                    <div key={kpi.id} className={`relative p-4 rounded-xl border ${colors.bg} ${colors.border}`}>
+                    <div key={kpi.id} className={`relative p-3 sm:p-4 rounded-lg sm:rounded-xl border ${colors.bg} ${colors.border}`}>
                       <button
                         onClick={() => removeKPI(kpi.id)}
-                        className="absolute top-2 right-2 p-1 rounded-full hover:bg-white/50 text-slate-400 hover:text-red-500 transition-colors"
+                        className="absolute top-1.5 right-1.5 sm:top-2 sm:right-2 p-1 rounded-full hover:bg-white/50 text-slate-400 hover:text-red-500 transition-colors"
                       >
                         <X className="w-3 h-3" />
                       </button>
-                      <div className={`text-xs font-medium ${colors.text} mb-1`}>{kpi.label}</div>
-                      <div className="text-xl font-bold text-slate-900">{kpi.value}</div>
+                      <div className={`text-[10px] sm:text-xs font-medium ${colors.text} mb-1 truncate`}>{kpi.label}</div>
+                      <div className="text-lg sm:text-xl font-bold text-slate-900">{kpi.value}</div>
                     </div>
                   );
                 })}
               </div>
 
-              <div className="space-y-3">
+              <div className="space-y-2 sm:space-y-3">
                 {selectedVizData.map((viz) => {
                   return (
-                    <div key={viz.id} className="relative p-4 bg-white rounded-xl border border-slate-200">
+                    <div key={viz.id} className="relative p-3 sm:p-4 bg-white rounded-lg sm:rounded-xl border border-slate-200">
                       <button
                         onClick={() => removeViz(viz.id)}
-                        className="absolute top-2 right-2 p-1 rounded-full hover:bg-slate-100 text-slate-400 hover:text-red-500 transition-colors z-10"
+                        className="absolute top-1.5 right-1.5 sm:top-2 sm:right-2 p-1 rounded-full hover:bg-slate-100 text-slate-400 hover:text-red-500 transition-colors z-10"
                       >
                         <X className="w-3 h-3" />
                       </button>
-                      <div className="flex items-center gap-3 mb-3">
-                        <div className="p-2 bg-cyan-100 rounded-lg text-cyan-600">
-                          {viz.type === 'line' && <TrendingUp className="w-5 h-5" />}
-                          {viz.type === 'bar' && <BarChart3 className="w-5 h-5" />}
-                          {viz.type === 'pie' && <PieChartIcon className="w-5 h-5" />}
-                          {viz.type === 'gauge' && <Target className="w-5 h-5" />}
-                          {viz.type === 'heatmap' && <Map className="w-5 h-5" />}
+                      <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+                        <div className="p-1.5 sm:p-2 bg-cyan-100 rounded-lg text-cyan-600 shrink-0">
+                          {viz.type === 'line' && <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5" />}
+                          {viz.type === 'bar' && <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5" />}
+                          {viz.type === 'pie' && <PieChartIcon className="w-4 h-4 sm:w-5 sm:h-5" />}
+                          {viz.type === 'gauge' && <Target className="w-4 h-4 sm:w-5 sm:h-5" />}
+                          {viz.type === 'heatmap' && <Map className="w-4 h-4 sm:w-5 sm:h-5" />}
                         </div>
-                        <div>
-                          <div className="font-medium text-slate-900">{viz.title}</div>
-                          <div className="text-xs text-slate-500">{viz.description}</div>
+                        <div className="min-w-0">
+                          <div className="font-medium text-slate-900 text-sm sm:text-base truncate">{viz.title}</div>
+                          <div className="text-[10px] sm:text-xs text-slate-500 truncate">{viz.description}</div>
                         </div>
                       </div>
                       <ChartPreview type={viz.type} />
@@ -489,8 +490,8 @@ export function BIBuilderSection() {
               </div>
 
               {selectedKPIs.length === 0 && selectedVizs.length === 0 && (
-                <div className="p-8 text-center border-2 border-dashed border-slate-200 rounded-xl">
-                  <Palette className="w-12 h-12 text-slate-300 mx-auto mb-3" />
+                <div className="p-6 sm:p-8 text-center border-2 border-dashed border-slate-200 rounded-lg sm:rounded-xl">
+                  <Palette className="w-10 h-10 sm:w-12 sm:h-12 text-slate-300 mx-auto mb-3" />
                   <p className="text-sm text-slate-500">Dashboard masih kosong</p>
                   <p className="text-xs text-slate-400 mt-1">Pilih KPI dan visualisasi di sebelah kiri</p>
                 </div>
@@ -499,12 +500,12 @@ export function BIBuilderSection() {
           )}
         </div>
 
-        <div className="mt-6 p-4 bg-gradient-to-r from-cyan-600 to-teal-600 rounded-xl text-white">
+        <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-gradient-to-r from-cyan-600 to-teal-600 rounded-lg sm:rounded-xl text-white">
           <div className="flex items-center gap-2 mb-2">
-            <Palette className="w-4 h-4 text-cyan-200" />
-            <h4 className="font-semibold text-sm">Tips Membangun Dashboard Efektif</h4>
+            <Palette className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-200" />
+            <h4 className="font-semibold text-xs sm:text-sm">Tips Membangun Dashboard Efektif</h4>
           </div>
-          <ul className="text-xs text-cyan-100 leading-relaxed space-y-1 ml-4">
+          <ul className="text-[10px] sm:text-xs text-cyan-100 leading-relaxed space-y-1 ml-3 sm:ml-4">
             <li>• Pilih 4-6 KPI yang paling relevan dengan tujuan Anda (jangan terlalu banyak)</li>
             <li>• Kombinasikan metrics dari kategori berbeda (ekonomi, sosial, digital)</li>
             <li>• Pilih visualisasi yang sesuai dengan tipe data (trend=line, komposisi=pie)</li>

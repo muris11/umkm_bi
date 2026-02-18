@@ -197,51 +197,51 @@ export function WhatIfSimulatorSection() {
 
   return (
     <Card className="mb-8 overflow-hidden border-emerald-200 bg-gradient-to-br from-emerald-50/50 to-white">
-      <CardHeader className="pb-4 border-b border-emerald-100">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-emerald-100 rounded-xl text-emerald-600">
-              <Calculator className="w-6 h-6" />
+      <CardHeader className="pb-3 sm:pb-4 border-b border-emerald-100 p-4 sm:p-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="p-2 sm:p-2.5 bg-emerald-100 rounded-lg sm:rounded-xl text-emerald-600 shrink-0">
+              <Calculator className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
-            <div>
-              <CardTitle className="text-emerald-900 text-xl">What-If Scenario Simulator</CardTitle>
-              <p className="text-sm text-emerald-600 mt-1">
+            <div className="min-w-0">
+              <CardTitle className="text-emerald-900 text-lg sm:text-xl">What-If Scenario Simulator</CardTitle>
+              <p className="text-xs sm:text-sm text-emerald-600 mt-0.5 sm:mt-1">
                 Simulasi dampak kebijakan dengan mengubah variabel
               </p>
             </div>
           </div>
           <button
             onClick={resetVariables}
-            className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-slate-600 bg-white border border-slate-200 rounded-lg hover:border-emerald-300 transition-colors"
+            className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-2 text-xs sm:text-sm font-medium text-slate-600 bg-white border border-slate-200 rounded-lg hover:border-emerald-300 transition-colors self-start sm:self-auto"
           >
-            <RotateCcw className="w-4 h-4" />
+            <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             Reset
           </button>
         </div>
       </CardHeader>
       
-      <CardContent className="p-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="space-y-4">
+      <CardContent className="p-3 sm:p-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+          <div className="space-y-3 sm:space-y-4">
             <div className="flex items-center justify-between mb-2">
-              <span className="font-semibold text-slate-900">Variabel Kebijakan</span>
-              <Badge variant="default">{variables.length} variabel</Badge>
+              <span className="font-semibold text-slate-900 text-sm sm:text-base">Variabel Kebijakan</span>
+              <Badge variant="default" className="text-xs">{variables.length} variabel</Badge>
             </div>
 
             {variables.map((variable) => (
-              <div key={variable.id} className="p-4 bg-white rounded-xl border border-slate-200">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-2">
+              <div key={variable.id} className="p-3 sm:p-4 bg-white rounded-lg sm:rounded-xl border border-slate-200">
+                <div className="flex items-center justify-between mb-2 sm:mb-3">
+                  <div className="flex items-center gap-2 min-w-0 mr-2">
                     {variable.impact === 'positive' ? (
-                      <TrendingUp className="w-4 h-4 text-emerald-500" />
+                      <TrendingUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-500 shrink-0" />
                     ) : variable.impact === 'negative' ? (
-                      <TrendingUp className="w-4 h-4 text-red-500 rotate-180" />
+                      <TrendingUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-red-500 rotate-180 shrink-0" />
                     ) : (
-                      <Target className="w-4 h-4 text-slate-400" />
+                      <Target className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400 shrink-0" />
                     )}
-                    <span className="font-medium text-slate-900">{variable.name}</span>
+                    <span className="font-medium text-slate-900 text-sm truncate">{variable.name}</span>
                   </div>
-                  <Badge variant="info" className="font-mono">
+                  <Badge variant="info" className="font-mono text-xs shrink-0">
                     {variable.currentValue} {variable.unit}
                   </Badge>
                 </div>
@@ -258,7 +258,7 @@ export function WhatIfSimulatorSection() {
 
                 <div className="flex justify-between text-[10px] text-slate-400 mt-1">
                   <span>{variable.min} {variable.unit}</span>
-                  <span>Default: {variable.defaultValue}</span>
+                  <span className="hidden sm:inline">Default: {variable.defaultValue}</span>
                   <span>{variable.max} {variable.unit}</span>
                 </div>
               </div>
@@ -267,95 +267,95 @@ export function WhatIfSimulatorSection() {
             <button
               onClick={runSimulation}
               disabled={isSimulating}
-              className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="w-full flex items-center justify-center gap-2 py-2.5 sm:py-3 px-4 bg-emerald-600 text-white rounded-lg sm:rounded-xl font-medium hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm sm:text-base"
             >
               {isSimulating ? (
                 <>
                   <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Menghitung Scenario...
+                  <span className="text-sm sm:text-base">Menghitung...</span>
                 </>
               ) : (
                 <>
                   <Play className="w-4 h-4" />
-                  Jalankan Simulasi
+                  <span className="text-sm sm:text-base">Jalankan Simulasi</span>
                 </>
               )}
             </button>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {results ? (
               <>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="p-4 bg-white rounded-xl border border-slate-200">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Building2 className="w-4 h-4 text-emerald-600" />
-                      <span className="text-xs text-slate-500">Pertumbuhan UMKM</span>
+                <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                  <div className="p-3 sm:p-4 bg-white rounded-lg sm:rounded-xl border border-slate-200">
+                    <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
+                      <Building2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-600" />
+                      <span className="text-[10px] sm:text-xs text-slate-500 truncate">Pertumbuhan UMKM</span>
                     </div>
-                    <div className="text-2xl font-bold text-slate-900">+{results.umkmGrowth.toFixed(0)}</div>
-                    <div className="text-xs text-slate-400">unit baru</div>
+                    <div className="text-xl sm:text-2xl font-bold text-slate-900">+{results.umkmGrowth.toFixed(0)}</div>
+                    <div className="text-[10px] sm:text-xs text-slate-400">unit baru</div>
                   </div>
 
-                  <div className="p-4 bg-white rounded-xl border border-slate-200">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Users className="w-4 h-4 text-blue-600" />
-                      <span className="text-xs text-slate-500">Lapangan Kerja</span>
+                  <div className="p-3 sm:p-4 bg-white rounded-lg sm:rounded-xl border border-slate-200">
+                    <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
+                      <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600" />
+                      <span className="text-[10px] sm:text-xs text-slate-500 truncate">Lapangan Kerja</span>
                     </div>
-                    <div className="text-2xl font-bold text-slate-900">+{results.employmentImpact.toLocaleString()}</div>
-                    <div className="text-xs text-slate-400">tenaga kerja</div>
+                    <div className="text-xl sm:text-2xl font-bold text-slate-900">+{results.employmentImpact.toLocaleString()}</div>
+                    <div className="text-[10px] sm:text-xs text-slate-400">tenaga kerja</div>
                   </div>
 
-                  <div className="p-4 bg-white rounded-xl border border-slate-200">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Wallet className="w-4 h-4 text-violet-600" />
-                      <span className="text-xs text-slate-500">Dampak Ekonomi</span>
+                  <div className="p-3 sm:p-4 bg-white rounded-lg sm:rounded-xl border border-slate-200">
+                    <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
+                      <Wallet className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-violet-600" />
+                      <span className="text-[10px] sm:text-xs text-slate-500 truncate">Dampak Ekonomi</span>
                     </div>
-                    <div className="text-2xl font-bold text-slate-900">Rp {results.economicImpact}M</div>
-                    <div className="text-xs text-slate-400">per tahun</div>
+                    <div className="text-xl sm:text-2xl font-bold text-slate-900">Rp {results.economicImpact}M</div>
+                    <div className="text-[10px] sm:text-xs text-slate-400">per tahun</div>
                   </div>
 
-                  <div className="p-4 bg-white rounded-xl border border-slate-200">
-                    <div className="flex items-center gap-2 mb-2">
-                      <BarChart3 className="w-4 h-4 text-amber-600" />
-                      <span className="text-xs text-slate-500">ROI</span>
+                  <div className="p-3 sm:p-4 bg-white rounded-lg sm:rounded-xl border border-slate-200">
+                    <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
+                      <BarChart3 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-600" />
+                      <span className="text-[10px] sm:text-xs text-slate-500 truncate">ROI</span>
                     </div>
-                    <div className={`text-2xl font-bold ${results.roi > 0 ? 'text-emerald-600' : 'text-red-600'}`}>
+                    <div className={`text-xl sm:text-2xl font-bold ${results.roi > 0 ? 'text-emerald-600' : 'text-red-600'}`}>
                       {results.roi > 0 ? '+' : ''}{results.roi}%
                     </div>
-                    <div className="text-xs text-slate-400">return on investment</div>
+                    <div className="text-[10px] sm:text-xs text-slate-400">return</div>
                   </div>
                 </div>
 
-                <div className="flex gap-3">
+                <div className="flex gap-2 sm:gap-3 flex-wrap">
                   <Badge 
                     variant={results.riskLevel === 'low' ? 'success' : results.riskLevel === 'medium' ? 'warning' : 'error'}
-                    className="text-xs"
+                    className="text-[10px] sm:text-xs"
                   >
                     {getRiskBadge(results.riskLevel).text}
                   </Badge>
-                  <Badge variant="info" className="text-xs">
+                  <Badge variant="info" className="text-[10px] sm:text-xs">
                     Confidence: {results.confidence}%
                   </Badge>
                 </div>
 
-                <div className="p-4 bg-amber-50 rounded-xl border border-amber-200">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Lightbulb className="w-5 h-5 text-amber-600" />
-                    <span className="font-semibold text-amber-900">Insight & Rekomendasi</span>
+                <div className="p-3 sm:p-4 bg-amber-50 rounded-lg sm:rounded-xl border border-amber-200">
+                  <div className="flex items-center gap-2 mb-2 sm:mb-3">
+                    <Lightbulb className="w-4 h-4 sm:w-5 sm:h-5 text-amber-600" />
+                    <span className="font-semibold text-amber-900 text-sm sm:text-base">Insight & Rekomendasi</span>
                   </div>
                   <ul className="space-y-2">
                     {results.insights.map((insight, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-sm text-amber-800">
-                        <ArrowRight className="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" />
-                        {insight}
+                      <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm text-amber-800">
+                        <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-500 mt-0.5 flex-shrink-0" />
+                        <span className="leading-relaxed">{insight}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <div className="p-4 bg-emerald-600 rounded-xl text-white">
-                  <div className="text-sm font-semibold mb-2">Kesimpulan Simulasi</div>
-                  <p className="text-xs text-emerald-100 leading-relaxed">
+                <div className="p-3 sm:p-4 bg-emerald-600 rounded-lg sm:rounded-xl text-white">
+                  <div className="text-xs sm:text-sm font-semibold mb-2">Kesimpulan Simulasi</div>
+                  <p className="text-[10px] sm:text-xs text-emerald-100 leading-relaxed">
                     Dengan anggaran Rp {variables.find(v => v.id === 'budget')?.currentValue} miliar dan target 
                     {variables.find(v => v.id === 'coverage')?.currentValue} UMKM, program diproyeksikan menghasilkan 
                     ROI {results.roi > 0 ? 'positif' : 'negatif'} sebesar {results.roi}%. 
@@ -368,8 +368,8 @@ export function WhatIfSimulatorSection() {
                 </div>
               </>
             ) : (
-              <div className="h-full flex flex-col items-center justify-center p-8 border-2 border-dashed border-slate-200 rounded-xl">
-                <Calculator className="w-16 h-16 text-slate-300 mb-4" />
+              <div className="h-full min-h-[200px] flex flex-col items-center justify-center p-6 sm:p-8 border-2 border-dashed border-slate-200 rounded-lg sm:rounded-xl">
+                <Calculator className="w-12 h-12 sm:w-16 sm:h-16 text-slate-300 mb-4" />
                 <p className="text-sm text-slate-500 text-center">
                   Sesuaikan variabel di sebelah kiri
                 </p>
@@ -381,12 +381,12 @@ export function WhatIfSimulatorSection() {
           </div>
         </div>
 
-        <div className="mt-6 p-4 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl text-white">
+        <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-lg sm:rounded-xl text-white">
           <div className="flex items-center gap-2 mb-2">
-            <Target className="w-4 h-4 text-emerald-200" />
-            <h4 className="font-semibold text-sm">Apa itu What-If Analysis?</h4>
+            <Target className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-200" />
+            <h4 className="font-semibold text-xs sm:text-sm">Apa itu What-If Analysis?</h4>
           </div>
-          <p className="text-xs text-emerald-100 leading-relaxed">
+          <p className="text-[10px] sm:text-xs text-emerald-100 leading-relaxed">
             What-If Analysis adalah teknik decision support yang memungkinkan Anda mengeksplorasi 
             berbagai skenario dengan mengubah variabel input. Ini membantu pembuat kebijakan memahami 
             trade-off antara anggaran, coverage, timeline, dan outcome sebelum komitmen resources. 
