@@ -8,16 +8,23 @@ import type {
     SektorUmkm,
     UmkmRawDataRow
 } from '../types';
-import { DashboardFilters } from './filters'; // Filters barrel
+import { DashboardFilters } from './filters';
 import {
+    BIBuilderSection,
+    BIDashboardSection,
     DashboardBiVisualizationSection,
     DashboardDecisionSection,
     DashboardDiscussionSection,
     DashboardDssSection,
     DashboardHeroSection,
     DashboardInsightSection,
-    DashboardKpiSection
-} from './sections'; // Sections barrel
+    DashboardKpiSection,
+    DataDrivenDecisionEnhancedSection,
+    DataExplorerSection,
+    MLAnalysisSection,
+    MLPlaygroundSection,
+    WhatIfSimulatorSection
+} from './sections';
 
 interface DashboardContainerProps {
   rawData: UmkmRawDataRow[];
@@ -25,16 +32,12 @@ interface DashboardContainerProps {
 }
 
 export function DashboardContainer({ rawData, meta }: DashboardContainerProps) {
-  // State for filters
-  // Default to latest year if available, or 2024
   const defaultYear = meta.tahun.length > 0 ? meta.tahun[meta.tahun.length - 1] : 2025;
   
   const [selectedYear, setSelectedYear] = useState<number>(defaultYear);
   const [selectedKabKota, setSelectedKabKota] = useState<string | null>(null);
   const [selectedSektor, setSelectedSektor] = useState<SektorUmkm | null>(null);
 
-  // Build View Model on the fly based on filters
-  // This is fast enough for <10k rows
   const viewModel = useMemo(() => {
     return buildExtendedViewModel(rawData, meta, {
       tahun: selectedYear,
@@ -43,12 +46,7 @@ export function DashboardContainer({ rawData, meta }: DashboardContainerProps) {
     });
   }, [rawData, meta, selectedYear, selectedKabKota, selectedSektor]);
 
-  // Extract lists for filter dropdowns from meta (or derive from raw data if needed)
-  // Meta already has them
   const kabKotaList = useMemo(() => {
-    // We can also extract unique KabKota from rawData if we want to support filtering based on current filtered view?
-    // But usually filters options are static or from master data.
-    // Let's use unique values from rawData to be safe
     return Array.from(new Set(rawData.map(d => d.kabKota))).sort();
   }, [rawData]);
 
@@ -71,9 +69,30 @@ export function DashboardContainer({ rawData, meta }: DashboardContainerProps) {
 
         <DashboardKpiSection summary={viewModel.kpiSummary} />
         
+        <MLAnalysisSection 
+          mlModels={viewModel.mlAnalysis.mlModels}
+          predictiveAnalysis={viewModel.mlAnalysis.predictiveAnalysis}
+        />
+        
+        <MLPlaygroundSection />
+        
+        <BIDashboardSection 
+          roleBasedData={viewModel.biDashboard.roleBasedData}
+        />
+        
+        <BIBuilderSection />
+        
         <DashboardBiVisualizationSection data={viewModel} />
         
         <DashboardInsightSection insights={viewModel.insights} />
+        
+        <DataDrivenDecisionEnhancedSection 
+          decision={viewModel.dataDrivenDecision}
+        />
+        
+        <WhatIfSimulatorSection />
+        
+        <DataExplorerSection />
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
            <div className="flex flex-col gap-6">

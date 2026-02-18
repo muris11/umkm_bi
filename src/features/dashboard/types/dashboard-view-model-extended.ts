@@ -1,10 +1,10 @@
 import type { AggregatedKabKota, AggregatedKecamatan, AggregatedSektor } from '../lib/data-aggregator';
 import type { ScoredAlternative } from './alternative';
+import type { BIDashboardData } from './bi-dashboard';
+import type { DataDrivenDecision } from './data-driven-decision';
+import type { MLAnalysisData } from './ml-analysis';
 import type { SektorUmkm, UmkmRawDataRow } from './umkm-raw-data';
 
-/**
- * Extended Dashboard View Model for full dataset
- */
 export interface DashboardViewModelExtended {
   meta: {
     sumber: string;
@@ -16,15 +16,11 @@ export interface DashboardViewModelExtended {
     catatanMetodologi: string[];
     generatedAt: string;
   };
-  
-  // Filter state
   filters: {
     selectedTahun: number;
     selectedKabKota: string | null;
     selectedSektor: SektorUmkm | null;
   };
-  
-  // Summary KPIs
   kpiSummary: {
     totalUmkm: number;
     totalTenagaKerja: number;
@@ -34,13 +30,9 @@ export interface DashboardViewModelExtended {
     totalOmzetMiliar: number;
     avgOmzetBulananJuta: number;
   };
-  
-  // Aggregated data
   byKabKota: AggregatedKabKota[];
   bySektor: AggregatedSektor[];
-  
-  // Top kecamatan with priority score
-  topKecamatan: (AggregatedKecamatan & { priorityScore: number })[]; 
+  topKecamatan: (AggregatedKecamatan & { priorityScore: number })[];
   
   // Year-over-year comparison
   yoyComparison: {
@@ -49,11 +41,7 @@ export interface DashboardViewModelExtended {
     digitalGrowth: number;
     omzetGrowth: number;
   } | null;
-  
-  // Insights generated from data
   insights: string[];
-  
-  // DSS alternatives
   scoredAlternatives: ScoredAlternative[];
   decision: {
     pilihanUtama: string;
@@ -61,9 +49,10 @@ export interface DashboardViewModelExtended {
     wilayahFokus: string[];
   };
 
-  // Raw data that matches current filters (for download)
-  filteredData: UmkmRawDataRow[]; // Using existing import
+  filteredData: UmkmRawDataRow[];
+  mlAnalysis: MLAnalysisData;
+  biDashboard: BIDashboardData;
+  dataDrivenDecision: DataDrivenDecision;
 }
 
-// Re-export as standard ViewModel if needed or keep separate
 export type DashboardViewModel = DashboardViewModelExtended;

@@ -1,4 +1,5 @@
 import { FAQSection } from "@/components/landing/faq-section"
+import { InteractiveFeaturesSection } from "@/components/landing/interactive-features-section"
 import { KeyStats } from "@/components/landing/key-stats"
 import { LandingHero } from "@/components/landing/landing-hero"
 import { MapPreview } from "@/components/landing/map-preview"
@@ -61,6 +62,7 @@ export default async function LandingPage() {
         totalSektor={totalSektor}
       />
       <Partners />
+      <InteractiveFeaturesSection />
       <KeyStats 
         totalUmkm={totalUmkm}
         totalTenagaKerja={totalTenagaKerja}

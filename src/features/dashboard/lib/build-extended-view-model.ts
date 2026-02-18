@@ -7,6 +7,7 @@ import {
 } from './data-aggregator';
 import { generateExtendedInsights } from './extended-insight-engine';
 import { calculatePriorityScore } from './priority-scorer';
+import { generateMLAnalysis, generateBIDashboardData, generateDataDrivenDecision } from './ml-bi-data-generator';
 
 interface BuildOptions {
   tahun?: number;
@@ -50,9 +51,27 @@ export function buildExtendedViewModel(
     kpiSummary,
     byKabKota,
     bySektor,
-    topKecamatan: scoredKecamatan, // Pass all for context if needed, or top
+    topKecamatan: scoredKecamatan,
     yoyComparison,
   });
+  
+  const hasHistoricalData = meta.tahun.length >= 2;
+  const mlAnalysis = generateMLAnalysis(hasHistoricalData, meta.jumlahBaris);
+  
+  const topSektorName = bySektor.sort((a, b) => b.totalUmkm - a.totalUmkm)[0]?.sektor || 'Kuliner';
+  const biDashboard = generateBIDashboardData(
+    kpiSummary.totalUmkm,
+    kpiSummary.totalTenagaKerja,
+    kpiSummary.avgPersenDigital,
+    meta.kabKotaCount,
+    topSektorName
+  );
+  
+  const dataDrivenDecision = generateDataDrivenDecision(
+    topKecamatan,
+    bySektor,
+    kpiSummary.avgPersenDigital
+  );
   
   return {
     meta,
@@ -67,7 +86,7 @@ export function buildExtendedViewModel(
     topKecamatan,
     yoyComparison,
     insights,
-    scoredAlternatives: [], // Will be populated by DSS logic later or left empty here
+    scoredAlternatives: [],
     decision: {
       pilihanUtama: topKecamatan.length > 0 ? `Program Pemberdayaan ${topKecamatan[0].sektorDominan} di ${topKecamatan[0].kecamatan}` : 'Belum adaa data',
       alasan: topKecamatan.length > 0 
@@ -76,6 +95,9 @@ export function buildExtendedViewModel(
       wilayahFokus: topKecamatan.map(k => k.kecamatan),
     },
     filteredData: filtered,
+    mlAnalysis,
+    biDashboard,
+    dataDrivenDecision,
   };
 }
 
