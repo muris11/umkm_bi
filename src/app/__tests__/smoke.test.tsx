@@ -3,20 +3,17 @@ import { render, screen } from '@testing-library/react';
 import Home from '../page';
 
 describe('Home page smoke test', () => {
-  it('should render Dashboard UMKM heading', () => {
-    render(<Home />);
+  it('should render landing hero heading', async () => {
+    const ui = await Home();
+    render(ui);
     const heading = screen.getByRole('heading', { level: 1 });
-    expect(heading).toHaveTextContent(/Dashboard/i);
+    expect(heading).toHaveTextContent(/Data UMKM/i);
   });
 
-  it('should render sidebar with all 6 navigation labels on Home page', () => {
-    render(<Home />);
-    // Use getAllByText and get first match (sidebar navigation items)
-    expect(screen.getAllByText('Ringkasan KPI')[0]).toBeInTheDocument();
-    expect(screen.getAllByText('Visualisasi BI')[0]).toBeInTheDocument();
-    expect(screen.getAllByText('Insight')[0]).toBeInTheDocument();
-    expect(screen.getAllByText('Alternatif DSS')[0]).toBeInTheDocument();
-    expect(screen.getAllByText('Keputusan Akhir')[0]).toBeInTheDocument();
-    expect(screen.getAllByText('Diskusi')[0]).toBeInTheDocument();
+  it('should render primary landing actions', async () => {
+    const ui = await Home();
+    render(ui);
+    expect(screen.getAllByRole('button', { name: /Explorasi Dashboard/i })[0]).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: /Pelajari Metodologi/i })[0]).toBeInTheDocument();
   });
 });

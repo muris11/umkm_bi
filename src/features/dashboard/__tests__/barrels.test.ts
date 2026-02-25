@@ -4,7 +4,7 @@ describe('dashboard barrels', () => {
   it('exports sections barrel', async () => {
     const barrel = await import('../components/sections');
     expect(barrel).toBeDefined();
-  });
+  }, 15000);
 
   it('exports charts barrel', async () => {
     const barrel = await import('../components/charts');

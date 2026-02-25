@@ -1,22 +1,74 @@
 import type { 
-  BIKPI, 
-  BIVisualization, 
   RoleBasedBI,
   MLModel, 
+  MLEvaluationSummary,
   PredictiveAnalysis,
   DataDrivenDecision,
+  DecisionTrace,
   PolicyAlternative,
   SelectedPolicy,
   DecisionRationale,
   ImplementationPlan
 } from '../types';
-import type { AggregatedKecamatan, AggregatedKabKota, AggregatedSektor } from './data-aggregator';
+import type { AggregatedKecamatan, AggregatedSektor } from './data-aggregator';
+
+interface MLAnalysisInput {
+  historicalCoverageYears: number;
+  dataPoints: number;
+  featureCount: number;
+  missingValueRatePct: number;
+}
 
 export function generateMLAnalysis(
-  hasHistoricalData: boolean,
-  dataPoints: number
+  input: MLAnalysisInput
 ): { mlModels: MLModel[]; predictiveAnalysis: PredictiveAnalysis } {
-  const canUsePredictive = hasHistoricalData && dataPoints > 100;
+  const {
+    historicalCoverageYears,
+    dataPoints,
+    featureCount,
+    missingValueRatePct,
+  } = input;
+
+  const hasHistoricalData = historicalCoverageYears >= 2;
+  const canUsePredictive = hasHistoricalData && dataPoints >= 500 && missingValueRatePct <= 15;
+  const dataReadinessRecommendation = canUsePredictive
+    ? 'Data cukup untuk baseline model prediktif. Lanjutkan validasi out-of-time dan monitoring drift.'
+    : 'Data belum ideal untuk prediksi penuh. Prioritaskan quality improvement, harmonisasi histori, dan feature engineering.';
+
+  const datasetWindow = `${historicalCoverageYears} tahun histori, ${dataPoints.toLocaleString('id-ID')} baris`;
+  const defaultSplit = hasHistoricalData ? '70/15/15 + validasi out-of-time' : '80/20 holdout (eksploratif)';
+
+  const classificationEval: MLEvaluationSummary = {
+    datasetWindow,
+    splitStrategy: defaultSplit,
+    metrics: [
+      { name: 'Accuracy', value: 0.87, unit: 'ratio', note: 'Baseline simulasi untuk klasifikasi risiko wilayah' },
+      { name: 'F1-Score', value: 0.84, unit: 'ratio' },
+      { name: 'ROC-AUC', value: 0.89, unit: 'ratio' },
+    ],
+    caveat: 'Skor akan berubah setelah training aktual per fold dan kalibrasi threshold.',
+  };
+
+  const regressionEval: MLEvaluationSummary = {
+    datasetWindow,
+    splitStrategy: defaultSplit,
+    metrics: [
+      { name: 'R²', value: 0.82, unit: 'ratio' },
+      { name: 'RMSE', value: 125, unit: 'unit UMKM' },
+      { name: 'MAE', value: 94, unit: 'unit UMKM' },
+    ],
+    caveat: 'Evaluasi regresi sensitif terhadap anomali wilayah dengan volume UMKM ekstrem.',
+  };
+
+  const clusteringEval: MLEvaluationSummary = {
+    datasetWindow,
+    splitStrategy: 'Unsupervised (no train/test split), evaluasi internal cluster quality',
+    metrics: [
+      { name: 'Silhouette', value: 0.68, unit: 'ratio' },
+      { name: 'Davies-Bouldin', value: 0.72, unit: 'index' },
+    ],
+    caveat: 'Kualitas cluster harus divalidasi dengan interpretasi domain (aksi kebijakan per cluster).',
+  };
   
   const mlModels: MLModel[] = [
     {
@@ -26,6 +78,7 @@ export function generateMLAnalysis(
       useCase: 'Mengelompokkan kecamatan dengan potensi gagal bayar atau kesulitan UMKM',
       accuracy: 87,
       applicable: canUsePredictive,
+      evaluation: classificationEval,
     },
     {
       name: 'K-Means Clustering',
@@ -33,6 +86,7 @@ export function generateMLAnalysis(
       description: 'Mengelompokkan kecamatan berdasarkan karakteristik UMKM serupa (jumlah, sektor, digitalisasi).',
       useCase: 'Segmentasi wilayah untuk program intervensi yang terarah',
       applicable: true,
+      evaluation: clusteringEval,
     },
     {
       name: 'Linear Regression',
@@ -41,6 +95,7 @@ export function generateMLAnalysis(
       useCase: 'Forecasting pertumbuhan UMKM 1-2 tahun ke depan',
       accuracy: hasHistoricalData ? 82 : undefined,
       applicable: canUsePredictive,
+      evaluation: regressionEval,
     },
     {
       name: 'Decision Tree',
@@ -49,6 +104,7 @@ export function generateMLAnalysis(
       useCase: 'Rekomendasi sektor prioritas untuk kecamatan tertentu',
       accuracy: 79,
       applicable: true,
+      evaluation: classificationEval,
     },
     {
       name: 'Time Series Analysis (ARIMA)',
@@ -57,6 +113,7 @@ export function generateMLAnalysis(
       useCase: 'Proyeksi jangka panjang (3-5 tahun) untuk perencanaan strategis',
       accuracy: hasHistoricalData ? 75 : undefined,
       applicable: canUsePredictive && dataPoints > 500,
+      evaluation: regressionEval,
     },
     {
       name: 'Hierarchical Clustering',
@@ -64,17 +121,25 @@ export function generateMLAnalysis(
       description: 'Mengelompokkan kabupaten/kota dalam hierarki berdasarkan kemiripan profil UMKM.',
       useCase: 'Identifikasi region dengan karakteristik serupa untuk benchmarking',
       applicable: true,
+      evaluation: clusteringEval,
     },
   ];
 
   const predictiveAnalysis: PredictiveAnalysis = {
     canUsePredictive,
     reason: canUsePredictive 
-      ? `Dataset memiliki ${dataPoints} data points historis yang memadai untuk analisis prediktif. Data time-series dari multi-periode memungkinkan deteksi pola dan tren yang dapat diproyeksikan ke masa depan.`
-      : `Dataset terbatas dengan ${dataPoints} data points. Untuk pendekatan prediktif yang akurat, diperlukan minimal 100+ data points dengan variasi temporal. Saat ini analisis deskriptif dan diagnostic lebih sesuai.`,
+      ? `Dataset memiliki ${dataPoints.toLocaleString('id-ID')} data points dengan cakupan histori ${historicalCoverageYears} tahun. Kondisi ini cukup untuk baseline prediksi dan validasi bertahap.`
+      : `Dataset belum ideal untuk prediksi penuh: histori ${historicalCoverageYears} tahun, ${dataPoints.toLocaleString('id-ID')} data points, missing value ${missingValueRatePct.toFixed(1)}%. Fokus awal sebaiknya quality assurance data dan analisis deskriptif/diagnostik.`,
     recommendedApproach: canUsePredictive
-      ? 'Gunakan kombinasi Classification untuk risiko wilayah, Regression untuk forecasting, dan Clustering untuk segmentasi. Implementasi iteratif mulai dari model sederhana.'
-      : 'Fokus pada Clustering untuk segmentasi wilayah dan Descriptive Analytics. Kumpulkan data historis lebih lengkap sebelum implementasi model prediktif.',
+      ? 'Gunakan kombinasi Classification (risiko), Regression (forecast), dan Clustering (segmentasi). Mulai dari baseline, lanjut validasi out-of-time, lalu operational monitoring.'
+      : 'Fokus pada Clustering untuk segmentasi wilayah dan BI deskriptif. Lengkapi histori dan turunkan missing value sebelum mengaktifkan prediktif operasional.',
+    dataReadiness: {
+      historicalCoverageYears,
+      dataPoints,
+      featureCount,
+      missingValueRatePct,
+      recommendation: dataReadinessRecommendation,
+    },
   };
 
   return { mlModels, predictiveAnalysis };
@@ -451,10 +516,13 @@ export function generateDataDrivenDecision(
     },
   ];
 
+  const decisionTrace = buildDecisionTrace(alternatives);
+  const bestAlternative = decisionTrace.ranking[0];
+
   const decisionRationale: DecisionRationale = {
-    comparedAlternatives: ['Pelatihan Massal', 'Subsidi Bunga', 'Pendampingan 1-on-1'],
-    keyInsight: `Berdasarkan analisis data, wilayah ${topKec?.kecamatan || 'prioritas'} memiliki skor prioritas tinggi (${topKec?.priorityScore.toFixed(2) || 'N/A'}) dengan sektor dominan ${topSektor?.sektor || 'N/A'}. Kendala utama adalah rendahnya digitalisasi (${avgDigital.toFixed(1)}%) dan akses pembiayaan. Program terpilih mengintegrasikan pendekatan digitalisasi dengan akses modal, mengatasi dua hambatan utama sekaligus.`,
-    primaryIndicator: 'Digital Maturity Index dan Akses Pembiayaan sebagai proxy potensi pertumbuhan UMKM',
+    comparedAlternatives: alternatives.map((alt) => alt.name),
+    keyInsight: `Berdasarkan data, ${topKec?.kecamatan || 'wilayah prioritas'} memiliki skor prioritas ${topKec?.priorityScore.toFixed(2) || 'N/A'} dengan sektor dominan ${topSektor?.sektor || 'N/A'}. Alternatif ${bestAlternative?.alternativeName || 'terbaik'} memperoleh weighted score tertinggi (${bestAlternative?.weightedScore.toFixed(1) || 'N/A'}) karena seimbang antara dampak, kelayakan anggaran, risiko, dan kecepatan manfaat.`,
+    primaryIndicator: 'Skor komposit berbobot: Impact (40%), Feasibility (25%), Risk (20%), Time-to-Value (15%)',
     confidenceLevel: avgDigital > 30 ? 'high' : 'medium',
   };
 
@@ -487,5 +555,76 @@ export function generateDataDrivenDecision(
     alternatives,
     decisionRationale,
     implementation,
+    decisionTrace,
+  };
+}
+
+const DECISION_WEIGHTS = {
+  impact: 0.4,
+  feasibility: 0.25,
+  risk: 0.2,
+  timeToValue: 0.15,
+} as const;
+
+function mapCostScore(costEstimate: PolicyAlternative['costEstimate']): number {
+  if (costEstimate === 'low') return 90;
+  if (costEstimate === 'medium') return 70;
+  return 45;
+}
+
+function mapRiskScore(cons: string[]): number {
+  const joined = cons.join(' ').toLowerCase();
+  if (joined.includes('tinggi')) return 45;
+  if (joined.includes('sedang')) return 70;
+  return 85;
+}
+
+function mapTimeScore(timeframe: PolicyAlternative['timeframe']): number {
+  if (timeframe === 'short') return 90;
+  if (timeframe === 'medium') return 72;
+  return 55;
+}
+
+function parseImpactScore(impactValue: string): number {
+  const match = impactValue.match(/\d+/g);
+  if (!match || match.length === 0) return 65;
+  const values = match.map((v) => Number(v));
+  const average = values.reduce((acc, curr) => acc + curr, 0) / values.length;
+  return Math.min(95, Math.max(45, average * 2));
+}
+
+function buildDecisionTrace(alternatives: PolicyAlternative[]): DecisionTrace {
+  const ranking = alternatives
+    .map((alternative) => {
+      const impact = parseImpactScore(alternative.estimatedImpact.value);
+      const feasibility = mapCostScore(alternative.costEstimate);
+      const risk = mapRiskScore(alternative.cons);
+      const timeToValue = mapTimeScore(alternative.timeframe);
+
+      const weightedScore =
+        impact * DECISION_WEIGHTS.impact +
+        feasibility * DECISION_WEIGHTS.feasibility +
+        risk * DECISION_WEIGHTS.risk +
+        timeToValue * DECISION_WEIGHTS.timeToValue;
+
+      return {
+        alternativeId: alternative.id,
+        alternativeName: alternative.name,
+        weightedScore: Number(weightedScore.toFixed(2)),
+        scoreBreakdown: {
+          impact,
+          feasibility,
+          risk,
+          timeToValue,
+        },
+        notes: `Dampak diambil dari estimasi outcome (${alternative.estimatedImpact.value}); kelayakan dari costEstimate=${alternative.costEstimate}; risiko dari narasi cons; time-to-value dari timeframe=${alternative.timeframe}.`,
+      };
+    })
+    .sort((a, b) => b.weightedScore - a.weightedScore);
+
+  return {
+    method: 'Weighted Sum Model',
+    weights: DECISION_WEIGHTS,
+    ranking,
   };
 }

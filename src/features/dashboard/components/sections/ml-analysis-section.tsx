@@ -11,6 +11,17 @@ interface MLModel {
   useCase: string;
   accuracy?: number;
   applicable: boolean;
+  evaluation?: {
+    datasetWindow: string;
+    splitStrategy: string;
+    metrics: Array<{
+      name: string;
+      value: number;
+      unit?: string;
+      note?: string;
+    }>;
+    caveat?: string;
+  };
 }
 
 interface MLAnalysisSectionProps {
@@ -19,6 +30,13 @@ interface MLAnalysisSectionProps {
     canUsePredictive: boolean;
     reason: string;
     recommendedApproach: string;
+    dataReadiness: {
+      historicalCoverageYears: number;
+      dataPoints: number;
+      featureCount: number;
+      missingValueRatePct: number;
+      recommendation: string;
+    };
   };
 }
 
@@ -82,6 +100,29 @@ export function MLAnalysisSection({ mlModels, predictiveAnalysis }: MLAnalysisSe
           </div>
         </div>
 
+        <div className="mb-6 grid grid-cols-1 md:grid-cols-4 gap-3">
+          <div className="rounded-lg border border-indigo-100 bg-white p-3">
+            <div className="text-[10px] uppercase tracking-wider text-slate-500">Histori</div>
+            <div className="text-sm font-semibold text-slate-900">{predictiveAnalysis.dataReadiness.historicalCoverageYears} tahun</div>
+          </div>
+          <div className="rounded-lg border border-indigo-100 bg-white p-3">
+            <div className="text-[10px] uppercase tracking-wider text-slate-500">Data Points</div>
+            <div className="text-sm font-semibold text-slate-900">{predictiveAnalysis.dataReadiness.dataPoints.toLocaleString('id-ID')}</div>
+          </div>
+          <div className="rounded-lg border border-indigo-100 bg-white p-3">
+            <div className="text-[10px] uppercase tracking-wider text-slate-500">Feature</div>
+            <div className="text-sm font-semibold text-slate-900">{predictiveAnalysis.dataReadiness.featureCount}</div>
+          </div>
+          <div className="rounded-lg border border-indigo-100 bg-white p-3">
+            <div className="text-[10px] uppercase tracking-wider text-slate-500">Missing Rate</div>
+            <div className="text-sm font-semibold text-slate-900">{predictiveAnalysis.dataReadiness.missingValueRatePct.toFixed(2)}%</div>
+          </div>
+        </div>
+
+        <div className="mb-6 rounded-lg border border-indigo-100 bg-indigo-50/60 p-3 text-xs text-indigo-900">
+          <span className="font-semibold">Data Readiness:</span> {predictiveAnalysis.dataReadiness.recommendation}
+        </div>
+
         <h4 className="text-sm font-semibold text-indigo-900 mb-4 flex items-center gap-2">
           <BarChart3 className="w-4 h-4" />
           Model ML yang Direkomendasikan
@@ -138,6 +179,22 @@ export function MLAnalysisSection({ mlModels, predictiveAnalysis }: MLAnalysisSe
                       />
                     </div>
                     <span className="text-xs font-medium text-slate-600">{model.accuracy}%</span>
+                  </div>
+                )}
+
+                {model.evaluation && (
+                  <div className="mt-3 rounded-lg border border-slate-100 bg-slate-50 p-2">
+                    <div className="text-[10px] uppercase tracking-wider text-slate-500 mb-1">Evaluasi</div>
+                    <div className="text-[11px] text-slate-600 mb-1">{model.evaluation.datasetWindow}</div>
+                    <div className="text-[11px] text-slate-600 mb-2">Split: {model.evaluation.splitStrategy}</div>
+                    <ul className="space-y-1">
+                      {model.evaluation.metrics.slice(0, 2).map((metric) => (
+                        <li key={`${model.name}-${metric.name}`} className="text-[11px] text-slate-700">
+                          <span className="font-medium">{metric.name}:</span> {metric.value}
+                          {metric.unit ? ` ${metric.unit}` : ''}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 )}
               </div>

@@ -30,6 +30,30 @@ export interface DecisionRationale {
   confidenceLevel: ConfidenceLevel;
 }
 
+export interface DecisionTraceItem {
+  alternativeId: string;
+  alternativeName: string;
+  weightedScore: number;
+  scoreBreakdown: {
+    impact: number;
+    feasibility: number;
+    risk: number;
+    timeToValue: number;
+  };
+  notes: string;
+}
+
+export interface DecisionTrace {
+  method: string;
+  weights: {
+    impact: number;
+    feasibility: number;
+    risk: number;
+    timeToValue: number;
+  };
+  ranking: DecisionTraceItem[];
+}
+
 export interface ImplementationPlan {
   steps: string[];
   responsibleParties: string[];
@@ -42,4 +66,5 @@ export interface DataDrivenDecision {
   alternatives: PolicyAlternative[];
   decisionRationale: DecisionRationale;
   implementation: ImplementationPlan;
+  decisionTrace: DecisionTrace;
 }

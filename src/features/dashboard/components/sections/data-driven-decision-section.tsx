@@ -13,7 +13,6 @@ import {
   BarChart3,
   FileText,
   ArrowRight,
-  Users,
   Building2
 } from 'lucide-react';
 
@@ -50,6 +49,27 @@ interface DataDrivenDecision {
     responsibleParties: string[];
     timeline: string;
     successMetrics: string[];
+  };
+  decisionTrace: {
+    method: string;
+    weights: {
+      impact: number;
+      feasibility: number;
+      risk: number;
+      timeToValue: number;
+    };
+    ranking: Array<{
+      alternativeId: string;
+      alternativeName: string;
+      weightedScore: number;
+      scoreBreakdown: {
+        impact: number;
+        feasibility: number;
+        risk: number;
+        timeToValue: number;
+      };
+      notes: string;
+    }>;
   };
 }
 
@@ -257,6 +277,28 @@ export function DataDrivenDecisionEnhancedSection({ decision }: DataDrivenDecisi
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        <div className="mb-6 p-4 bg-blue-50/60 rounded-xl border border-blue-200">
+          <h4 className="font-semibold text-blue-900 text-sm mb-2">Trace Perhitungan Keputusan</h4>
+          <p className="text-xs text-blue-800 mb-3">
+            Metode: <strong>{decision.decisionTrace.method}</strong> | Bobot: Impact {Math.round(decision.decisionTrace.weights.impact * 100)}%,
+            Feasibility {Math.round(decision.decisionTrace.weights.feasibility * 100)}%, Risk {Math.round(decision.decisionTrace.weights.risk * 100)}%,
+            Time-to-Value {Math.round(decision.decisionTrace.weights.timeToValue * 100)}%
+          </p>
+          <div className="space-y-2">
+            {decision.decisionTrace.ranking.map((item, index) => (
+              <div key={item.alternativeId} className="rounded-lg border border-blue-100 bg-white p-3">
+                <div className="flex items-center justify-between gap-3 mb-1">
+                  <div className="text-sm font-medium text-slate-900">#{index + 1} {item.alternativeName}</div>
+                  <div className="text-sm font-bold text-blue-700">{item.weightedScore.toFixed(2)}</div>
+                </div>
+                <div className="text-xs text-slate-600">
+                  Impact {item.scoreBreakdown.impact} | Feasibility {item.scoreBreakdown.feasibility} | Risk {item.scoreBreakdown.risk} | Time {item.scoreBreakdown.timeToValue}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 

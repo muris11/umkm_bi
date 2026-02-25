@@ -4,11 +4,13 @@ Dokumen panduan praktis untuk menggunakan, memahami, dan memanfaatkan dashboard 
 
 ## 1. Sumber Data
 
-**Dataset Utama:** `dataset_umkm_jabar_1000rows.csv`
+**Dataset Utama (aktif di aplikasi):** `src/data/umkm-jabar-full.json`
+
+**Sumber pembentukan dataset:** `dataset_umkm_jabar_2024_2025_full_kecamatan_sektor_8778rows.xlsx`
 
 **Struktur Data:**
-- **Jumlah baris:** 1.000 data UMKM
-- **Tahun observasi:** 2025
+- **Jumlah baris:** 8.778 data UMKM
+- **Tahun observasi:** 2024-2025
 - **Variabel utama:**
   - Jumlah UMKM per kecamatan
   - Kepadatan UMKM per 1000 penduduk
@@ -25,7 +27,17 @@ Dokumen panduan praktis untuk menggunakan, memahami, dan memanfaatkan dashboard 
 - Skor prioritas dihitung berbasis kombinasi terbobot dari KPI utama
 - Proyeksi prioritas wilayah didasarkan pada kondisi saat ini
 
-## 2. Definisi KPI UMKM
+## 2. Perbedaan Big Data, BI, dan Machine Learning (Smart City)
+
+| Komponen | Peran Utama | Pertanyaan yang Dijawab | Contoh di Proyek |
+|---|---|---|---|
+| Big Data | Fondasi data skala besar dan beragam | "Data apa yang tersedia dan seberapa lengkap?" | Integrasi data lintas kab/kec/ sektor dengan ribuan baris historis |
+| BI (Business Intelligence) | Analisis deskriptif dan diagnostik | "Apa yang terjadi dan kenapa?" | KPI, dashboard per peran (wali kota/dinas/camat), drill-down wilayah |
+| Machine Learning | Analisis prediktif/pengelompokan otomatis | "Apa yang mungkin terjadi berikutnya?" | Klasifikasi risiko, regresi proyeksi, clustering karakteristik wilayah |
+
+Dalam ekosistem Smart City, Big Data memberi bahan baku, BI memberi visibilitas operasional, dan ML memberi kemampuan prediksi untuk kebijakan proaktif.
+
+## 3. Definisi KPI UMKM
 
 ### KPI Utama
 
@@ -60,7 +72,7 @@ Dokumen panduan praktis untuk menggunakan, memahami, dan memanfaatkan dashboard 
 **Indeks Biaya Logistik**
 - Skor komposit efisiensi logistik per wilayah (skala 1-10)
 
-## 3. Cara Membaca Visualisasi
+## 4. Cara Membaca Visualisasi
 
 ### Dashboard Kepadatan UMKM (Bar Chart)
 **Sumbu X:** Wilayah prioritas (A, B, C, D)
@@ -97,7 +109,7 @@ Dokumen panduan praktis untuk menggunakan, memahami, dan memanfaatkan dashboard 
 - Kanan Bawah: Banyak pekerja, omzet rendah → masalah efisiensi
 - Kiri Bawah: UMKM mikro → program pemberdayaan dasar
 
-## 4. Cara Interpretasi Insight BI
+## 5. Cara Interpretasi Insight BI
 
 ### Membaca Panel Insight
 Panel Insight menyajikan **3-5 temuan kritis** hasil analisis data. Setiap insight mengikuti struktur:
@@ -119,7 +131,7 @@ Insight BI menjadi **basis data** untuk evaluasi alternatif kebijakan:
 2. Cari alternatif DSS yang langsung menjawab masalah tersebut
 3. Evaluasi kelayakan berdasarkan skor efektivitas dan anggaran
 
-## 5. Cara Memilih Keputusan Akhir
+## 6. Cara Memilih Keputusan Akhir
 
 ### Langkah 1: Evaluasi Tabel Alternatif DSS
 **Kolom Penting:**
@@ -170,7 +182,7 @@ Insight BI menjadi **basis data** untuk evaluasi alternatif kebijakan:
 - Akses pembiayaan <35%
 - Jumlah UMKM >2500 unit
 
-## 6. Tips Praktis
+## 7. Tips Praktis
 
 ### Untuk Pembuat Kebijakan
 1. **Mulai dari Insight BI**, jangan langsung ke DSS
@@ -189,7 +201,7 @@ Insight BI menjadi **basis data** untuk evaluasi alternatif kebijakan:
 2. **Rujuk Insight BI** untuk memahami konteks keputusan
 3. **Review Catatan Metodologi** untuk transparansi perhitungan
 
-## 7. Checklist Sebelum Mengambil Keputusan
+## 8. Checklist Sebelum Mengambil Keputusan
 
 - [ ] Sudah membaca semua insight BI
 - [ ] Sudah melihat minimal 3 visualisasi utama

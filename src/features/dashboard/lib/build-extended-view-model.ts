@@ -1,5 +1,5 @@
 import type { DashboardViewModelExtended } from '../types/dashboard-view-model-extended';
-import type { UmkmRawDataRow } from '../types/umkm-raw-data';
+import type { SektorUmkm, UmkmRawDataRow } from '../types/umkm-raw-data';
 import {
     aggregateByKabKota,
     aggregateByKecamatan,
@@ -55,8 +55,16 @@ export function buildExtendedViewModel(
     yoyComparison,
   });
   
-  const hasHistoricalData = meta.tahun.length >= 2;
-  const mlAnalysis = generateMLAnalysis(hasHistoricalData, meta.jumlahBaris);
+  const historicalCoverageYears = meta.tahun.length;
+  const sample = filtered[0];
+  const featureCount = sample ? Object.keys(sample).length : 0;
+  const missingValueRatePct = calculateMissingValueRate(filtered);
+  const mlAnalysis = generateMLAnalysis({
+    historicalCoverageYears,
+    dataPoints: meta.jumlahBaris,
+    featureCount,
+    missingValueRatePct,
+  });
   
   const topSektorName = bySektor.sort((a, b) => b.totalUmkm - a.totalUmkm)[0]?.sektor || 'Kuliner';
   const biDashboard = generateBIDashboardData(
@@ -78,7 +86,7 @@ export function buildExtendedViewModel(
     filters: {
       selectedTahun: tahun || (meta.tahun.length > 0 ? meta.tahun[meta.tahun.length - 1] : 2025),
       selectedKabKota: kabKota || null,
-      selectedSektor: sektor as any || null,
+      selectedSektor: (sektor as SektorUmkm | undefined) || null,
     },
     kpiSummary,
     byKabKota,
@@ -154,4 +162,27 @@ function sum<T>(arr: T[], fn: (item: T) => number): number {
 function avg<T>(arr: T[], fn: (item: T) => number): number {
   if (arr.length === 0) return 0;
   return sum(arr, fn) / arr.length;
+}
+
+function calculateMissingValueRate(data: UmkmRawDataRow[]): number {
+  if (data.length === 0) return 100;
+
+  let totalFields = 0;
+  let missingFields = 0;
+
+  for (const row of data) {
+    for (const value of Object.values(row)) {
+      totalFields += 1;
+      if (
+        value === null ||
+        value === undefined ||
+        (typeof value === 'string' && value.trim().length === 0) ||
+        (typeof value === 'number' && Number.isNaN(value))
+      ) {
+        missingFields += 1;
+      }
+    }
+  }
+
+  return Number(((missingFields / totalFields) * 100).toFixed(2));
 }
