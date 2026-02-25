@@ -23,7 +23,7 @@ export function LandingHero({ totalUmkm, totalTenagaKerja, avgPersenDigital, tot
       <div className="absolute -top-[30%] -left-[10%] w-[50%] h-[50%] rounded-full bg-brand-teal/10 blur-[100px]" />
       <div className="absolute top-[20%] -right-[10%] w-[40%] h-[40%] rounded-full bg-blue-500/10 blur-[100px]" />
 
-      <div className="container mx-auto px-4 text-center z-10 pt-10">
+      <div className="container mx-auto px-4 sm:px-6 text-center z-10 pt-10">
         <motion.div
            initial={{ opacity: 0, y: 20 }}
            animate={{ opacity: 1, y: 0 }}
@@ -41,7 +41,7 @@ export function LandingHero({ totalUmkm, totalTenagaKerja, avgPersenDigital, tot
            initial={{ opacity: 0, y: 20 }}
            animate={{ opacity: 1, y: 0 }}
            transition={{ duration: 0.5, delay: 0.1 }} 
-           className="text-5xl md:text-7xl lg:text-8xl font-bold font-grotesk tracking-tight text-slate-900 mb-8 leading-[0.9]"
+           className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold font-grotesk tracking-tight text-slate-900 mb-6 sm:mb-8 leading-[0.9] px-4"
         >
           Data UMKM <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-teal to-brand-blue">
@@ -53,7 +53,7 @@ export function LandingHero({ totalUmkm, totalTenagaKerja, avgPersenDigital, tot
            initial={{ opacity: 0, y: 20 }}
            animate={{ opacity: 1, y: 0 }}
            transition={{ duration: 0.5, delay: 0.2 }}
-           className="text-xl text-slate-600 max-w-2xl mx-auto mb-12 leading-relaxed"
+           className="text-base sm:text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-8 sm:mb-12 leading-relaxed px-4"
         >
           Portal resmi integrasi data Usaha Mikro, Kecil, dan Menengah. 
           Pantau pertumbuhan, sebaran, dan potensi ekonomi di {totalWilayah} Kabupaten/Kota.
@@ -63,16 +63,16 @@ export function LandingHero({ totalUmkm, totalTenagaKerja, avgPersenDigital, tot
            initial={{ opacity: 0, y: 20 }}
            animate={{ opacity: 1, y: 0 }}
            transition={{ duration: 0.5, delay: 0.3 }}
-           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+           className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4"
         >
           <Link href="/dashboard">
-            <Button size="lg" className="h-14 px-8 text-base rounded-full shadow-xl shadow-brand-teal/20 bg-brand-teal hover:bg-brand-teal/90">
+            <Button size="lg" className="h-12 sm:h-14 px-6 sm:px-8 text-sm sm:text-base w-full sm:w-auto rounded-full shadow-xl shadow-brand-teal/20 bg-brand-teal hover:bg-brand-teal/90">
               <BarChart3 className="mr-2 h-5 w-5" />
               Explorasi Dashboard
             </Button>
           </Link>
           <Link href="/about">
-             <Button variant="ghost" size="lg" className="h-14 px-8 text-base rounded-full text-slate-600 hover:bg-slate-100">
+             <Button variant="ghost" size="lg" className="h-12 sm:h-14 px-6 sm:px-8 text-sm sm:text-base w-full sm:w-auto rounded-full text-slate-600 hover:bg-slate-100">
               Pelajari Metodologi <ChevronRight className="ml-1 h-4 w-4" />
             </Button>
           </Link>

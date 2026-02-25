@@ -63,8 +63,8 @@ export function MLAnalysisSection({ mlModels, predictiveAnalysis }: MLAnalysisSe
 
   return (
     <Card className="mb-8 overflow-hidden border-indigo-200 bg-gradient-to-br from-indigo-50/50 to-white">
-      <CardHeader className="pb-4 border-b border-indigo-100">
-        <div className="flex items-center justify-between">
+      <CardHeader className="pb-4 border-b border-indigo-100 px-4 sm:px-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <div className="p-2.5 bg-indigo-100 rounded-xl text-indigo-600">
               <Brain className="w-6 h-6" />
@@ -85,7 +85,7 @@ export function MLAnalysisSection({ mlModels, predictiveAnalysis }: MLAnalysisSe
         </div>
       </CardHeader>
       
-      <CardContent className="p-6">
+      <CardContent className="p-4 sm:p-6">
         <div className="mb-6 p-4 bg-white/70 rounded-xl border border-indigo-100">
           <h4 className="text-sm font-semibold text-indigo-900 mb-2 flex items-center gap-2">
             <TrendingUp className="w-4 h-4" />
@@ -100,20 +100,20 @@ export function MLAnalysisSection({ mlModels, predictiveAnalysis }: MLAnalysisSe
           </div>
         </div>
 
-        <div className="mb-6 grid grid-cols-1 md:grid-cols-4 gap-3">
-          <div className="rounded-lg border border-indigo-100 bg-white p-3">
+        <div className="mb-6 grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3">
+          <div className="rounded-lg border border-indigo-100 bg-white p-2 sm:p-3">
             <div className="text-[10px] uppercase tracking-wider text-slate-500">Histori</div>
             <div className="text-sm font-semibold text-slate-900">{predictiveAnalysis.dataReadiness.historicalCoverageYears} tahun</div>
           </div>
-          <div className="rounded-lg border border-indigo-100 bg-white p-3">
+          <div className="rounded-lg border border-indigo-100 bg-white p-2 sm:p-3">
             <div className="text-[10px] uppercase tracking-wider text-slate-500">Data Points</div>
             <div className="text-sm font-semibold text-slate-900">{predictiveAnalysis.dataReadiness.dataPoints.toLocaleString('id-ID')}</div>
           </div>
-          <div className="rounded-lg border border-indigo-100 bg-white p-3">
+          <div className="rounded-lg border border-indigo-100 bg-white p-2 sm:p-3">
             <div className="text-[10px] uppercase tracking-wider text-slate-500">Feature</div>
             <div className="text-sm font-semibold text-slate-900">{predictiveAnalysis.dataReadiness.featureCount}</div>
           </div>
-          <div className="rounded-lg border border-indigo-100 bg-white p-3">
+          <div className="rounded-lg border border-indigo-100 bg-white p-2 sm:p-3">
             <div className="text-[10px] uppercase tracking-wider text-slate-500">Missing Rate</div>
             <div className="text-sm font-semibold text-slate-900">{predictiveAnalysis.dataReadiness.missingValueRatePct.toFixed(2)}%</div>
           </div>
@@ -128,15 +128,15 @@ export function MLAnalysisSection({ mlModels, predictiveAnalysis }: MLAnalysisSe
           Model ML yang Direkomendasikan
         </h4>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {mlModels.map((model, index) => {
             const config = typeConfig[model.type];
             const Icon = config.icon;
             
             return (
-              <div 
+              <div
                 key={index}
-                className={`p-4 rounded-xl border transition-all duration-200 ${
+                className={`p-3 sm:p-4 rounded-xl border transition-all duration-200 ${
                   model.applicable 
                     ? 'bg-white border-indigo-100 shadow-sm hover:shadow-md' 
                     : 'bg-slate-50/50 border-slate-200 opacity-60'
@@ -158,12 +158,12 @@ export function MLAnalysisSection({ mlModels, predictiveAnalysis }: MLAnalysisSe
                   </Badge>
                 </div>
                 
-                <h5 className="font-semibold text-slate-900 mb-1 text-sm">{model.name}</h5>
-                <p className="text-xs text-slate-500 mb-3 leading-relaxed">{model.description}</p>
+                <h5 className="font-semibold text-slate-900 mb-1 text-sm break-words">{model.name}</h5>
+                <p className="text-xs text-slate-500 mb-3 leading-relaxed break-words">{model.description}</p>
                 
                 <div className="pt-3 border-t border-slate-100">
                   <div className="text-[10px] uppercase tracking-wider text-slate-400 mb-1">Use Case</div>
-                  <p className="text-xs text-slate-700">{model.useCase}</p>
+                  <p className="text-xs text-slate-700 break-words">{model.useCase}</p>
                 </div>
                 
                 {model.accuracy && model.applicable && (
@@ -203,7 +203,7 @@ export function MLAnalysisSection({ mlModels, predictiveAnalysis }: MLAnalysisSe
         </div>
 
         <div className="mt-6 p-4 bg-gradient-to-r from-indigo-600 to-violet-600 rounded-xl text-white">
-          <div className="flex items-center gap-2 mb-2">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 mb-2">
             <Users className="w-4 h-4 text-indigo-200" />
             <h4 className="font-semibold text-sm">Konteks Smart City</h4>
           </div>

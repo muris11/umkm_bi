@@ -102,8 +102,8 @@ export function DataDrivenDecisionEnhancedSection({ decision }: DataDrivenDecisi
 
   return (
     <Card className="mb-8 overflow-hidden border-emerald-200 bg-gradient-to-br from-emerald-50/50 to-white">
-      <CardHeader className="pb-4 border-b border-emerald-100">
-        <div className="flex items-center justify-between">
+      <CardHeader className="pb-4 border-b border-emerald-100 px-4 sm:px-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <div className="p-2.5 bg-emerald-100 rounded-xl text-emerald-600">
               <Scale className="w-6 h-6" />
@@ -126,7 +126,7 @@ export function DataDrivenDecisionEnhancedSection({ decision }: DataDrivenDecisi
         </div>
       </CardHeader>
       
-      <CardContent className="p-6">
+      <CardContent className="p-4 sm:p-6">
         <div className="mb-6 p-4 bg-white/70 rounded-xl border border-emerald-100">
           <div className="flex items-start gap-3">
             <div className="p-2 bg-emerald-100 rounded-lg text-emerald-600 mt-0.5">
@@ -173,19 +173,19 @@ export function DataDrivenDecisionEnhancedSection({ decision }: DataDrivenDecisi
               const timeStyle = timeframeLabels[alt.timeframe];
               
               return (
-                <div 
+                <div
                   key={alt.id}
-                  className={`p-4 rounded-xl border transition-all cursor-pointer ${
+                  className={`p-3 sm:p-4 rounded-xl border transition-all cursor-pointer ${
                     isSelected 
                       ? 'bg-white border-emerald-300 shadow-md' 
                       : 'bg-white/50 border-slate-200 hover:border-emerald-200'
                   }`}
                   onClick={() => setSelectedAlternative(isSelected ? null : alt.id)}
                 >
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex items-center gap-3">
-                      <h5 className="font-semibold text-slate-900">{alt.name}</h5>
-                      <div className="flex gap-1">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-3 gap-3">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3">
+                      <h5 className="font-semibold text-slate-900 text-sm sm:text-base">{alt.name}</h5>
+                      <div className="flex flex-wrap gap-1">
                         <span className={`text-[10px] px-2 py-0.5 rounded-full ${costStyle.color}`}>
                           {costStyle.text}
                         </span>
@@ -194,17 +194,17 @@ export function DataDrivenDecisionEnhancedSection({ decision }: DataDrivenDecisi
                         </span>
                       </div>
                     </div>
-                    <div className="text-right">
+                    <div className="text-right w-full sm:w-auto">
                       <div className="text-xs text-slate-400">Est. Impact</div>
                       <div className="text-sm font-bold text-emerald-600">{alt.estimatedImpact.value}</div>
                       <div className="text-[10px] text-slate-500">{alt.estimatedImpact.metric}</div>
                     </div>
                   </div>
                   
-                  <p className="text-sm text-slate-600 mb-3">{alt.description}</p>
+                  <p className="text-sm text-slate-600 mb-3 break-words">{alt.description}</p>
                   
                   {isSelected && (
-                    <div className="pt-3 border-t border-slate-100 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="pt-3 border-t border-slate-100 grid grid-cols-1 gap-4">
                       <div>
                         <div className="text-xs font-medium text-emerald-600 mb-2 flex items-center gap-1">
                           <CheckCircle2 className="w-3 h-3" />
@@ -260,7 +260,7 @@ export function DataDrivenDecisionEnhancedSection({ decision }: DataDrivenDecisi
                 {decision.decisionRationale.keyInsight}
               </p>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <div className="text-xs font-medium text-amber-700 mb-1">Alternatif yang Dibandingkan</div>
                   <div className="flex flex-wrap gap-1">
@@ -308,7 +308,7 @@ export function DataDrivenDecisionEnhancedSection({ decision }: DataDrivenDecisi
             Rencana Implementasi
           </h4>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
             <div>
               <div className="text-xs font-medium text-slate-500 mb-2 flex items-center gap-1">
                 <TrendingUp className="w-3 h-3" />

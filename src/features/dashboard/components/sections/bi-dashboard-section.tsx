@@ -102,8 +102,8 @@ export function BIDashboardSection({ roleBasedData }: BIDashboardSectionProps) {
 
   return (
     <Card className="mb-8 overflow-hidden border-cyan-200 bg-gradient-to-br from-cyan-50/50 to-white">
-      <CardHeader className="pb-4 border-b border-cyan-100">
-        <div className="flex items-center justify-between flex-wrap gap-4">
+      <CardHeader className="pb-4 border-b border-cyan-100 px-4 sm:px-6">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="p-2.5 bg-cyan-100 rounded-xl text-cyan-600">
               <BarChart3 className="w-6 h-6" />
@@ -116,7 +116,7 @@ export function BIDashboardSection({ roleBasedData }: BIDashboardSectionProps) {
             </div>
           </div>
           
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2 w-full lg:w-auto">
             {(['waliKota', 'dinasKoperasi', 'camat', 'investor'] as UserRole[]).map((role) => {
               const Icon = roleIcons[role];
               const isActive = selectedRole === role;
@@ -124,7 +124,7 @@ export function BIDashboardSection({ roleBasedData }: BIDashboardSectionProps) {
                 <button
                   key={role}
                   onClick={() => setSelectedRole(role)}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition-all ${
+                  className={`flex items-center gap-2 px-3 py-2.5 min-h-[44px] rounded-lg text-xs font-medium transition-all ${
                     isActive 
                       ? 'bg-cyan-600 text-white shadow-md' 
                       : 'bg-white text-slate-600 border border-slate-200 hover:border-cyan-300'
@@ -143,7 +143,7 @@ export function BIDashboardSection({ roleBasedData }: BIDashboardSectionProps) {
         </div>
       </CardHeader>
       
-      <CardContent className="p-6">
+      <CardContent className="p-4 sm:p-6">
         <div className="mb-6 p-4 bg-white/70 rounded-xl border border-cyan-100">
           <div className="flex items-start gap-3">
             <div className="p-2 bg-cyan-100 rounded-lg text-cyan-600 mt-0.5">
@@ -166,7 +166,7 @@ export function BIDashboardSection({ roleBasedData }: BIDashboardSectionProps) {
             Key Performance Indicators (KPI)
           </h4>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-4">
             {currentRoleData.kpis.map((kpi) => {
               const KpiIcon = kpiIcons[kpi.icon];
               return (
